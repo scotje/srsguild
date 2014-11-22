@@ -1,0 +1,20 @@
+<div class="fieldrow">
+	<label for="balance_account[name]">Name</label>
+	<div class="field"><%= text_field(:balance_account, :name, {:class => 'text', :style => 'width: 300px;'}) %></div>
+</div>
+
+<div class="fieldrow">
+	<label for="balance_account[account_type]">Account Type</label>
+	<div class="field">
+		<select name="balance_account[account_type]" <% unless @balance_account.new_record? %>disabled="disabled"<% end %>>
+			<option <%= 'selected="selected"' if (@balance_account.account_type == 'standard') %> value="standard">Standard</option>
+			<option <%= 'selected="selected"' if (@balance_account.account_type == 'zero_sum') %> value="zero_sum">Zero Sum</option>
+			<!-- <option <%= 'selected="selected"' if (@balance_account.account_type == 'suicide_kings') %> value="suicide_kings">Suicide Kings</option> -->
+		</select>
+	</div>
+</div>
+
+<div class="fieldrow">
+	<label for="balance_account[decay_percent]">Weekly Decay</label>
+	<div class="field"><%= text_field(:balance_account, :decay_percent, {:class => 'text', :style => 'width: 20px;'}) %>%</div>
+</div>

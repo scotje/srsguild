@@ -1,0 +1,124 @@
+$highlight_color: #F8F497;
+
+table.calendar {
+	width: 100%;
+	
+	td.day {
+		width:	14.28%;
+		height:	70px;
+		
+		p.calendar_event {
+			margin:				2px 0;
+			background-color:	$highlight_color;
+			
+			text-align: 		center;
+			
+			a {
+				display:		block;
+				padding:		4px;
+			}
+		}
+	}
+	
+	td.today {
+		background-color:	#bbddff;
+	}
+}
+
+.prototip {
+	.content {
+		text-align:			left;
+	}
+	
+	.title {
+		a {
+			color:			#fff;
+		}
+	}
+}
+
+.event_detail {
+	.datetime {
+		margin:				0;
+		padding:			0;
+
+		font-weight:		bold;
+	}
+	
+	.organizer {
+		margin:				0;
+		padding:			0;
+	}
+	
+	.signup, .attendance {
+		padding-top:		1em;
+	}
+	
+	.signup_toggle {
+		text-align:			center;
+	}
+}
+
+.calendar_event_attendance {
+	padding:				3px;
+}
+
+#InCalendarNav {
+	overflow: 				hidden; 
+	text-align: 			center;
+	position:				relative;
+	
+	font-size:				1.25em;
+	
+	p {
+		margin:				0;
+		padding:			0;
+	}
+}
+
+#EventSummary, #EventSignup, #EventPersonalSignup, #EventAttendance {
+	p {
+		margin:				0;
+		padding:			0;
+	}
+}
+
+#EventSummary {
+	.organizer, .attendance, .comments {
+		margin:				0;
+		padding: 			0;
+	}
+	
+	.comments {
+		padding:			0.75em 0 0 0;
+	}
+}
+
+#EventPersonalSignup, #EventSignup, #EventAttendance {
+	/*padding-top:				1.25em;*/
+}
+
+#EventPersonalSignup {
+	overflow:				auto;
+}
+
+.EventList {
+	td {
+		padding:		3px 0 2px 0;
+
+		border:			0;
+		border-bottom:	1px solid #aaa;
+	}
+	
+	.previous_event {
+		color:			#aaa;
+	}
+	
+	.active_event {
+		font-weight:	bold;
+	}
+	
+	.future_event {
+		
+	}
+}

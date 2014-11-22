@@ -1,0 +1,6 @@
+<% if RAILS_ENV == 'production' %>
+	<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.8.0r4/build/reset-fonts-grids/reset-fonts-grids.css" />
+	<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.8.0r4/build/base/base-min.css" /> 
+<% else %>
+	<%= stylesheet_link_tag 'static/reset-fonts-grids', 'static/base-min' %>
+<% end %>

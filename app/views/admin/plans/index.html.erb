@@ -1,0 +1,40 @@
+<% title h("#{@_GUILD.name} Planning") %>
+<div id="GuildManage_Calendar">
+	<h1 class="GuildTitle"><%= @_GUILD.name %> Management: Planning</h1>
+
+	<div class="SectionHeading">
+		<h2>Upcoming Events</h2>
+	</div>
+	<% if @next_ten_events.blank? %>
+		<p>There are no future events scheduled.</p>
+	<% else %>
+		<table class="eventlist">
+			<tr>
+				<th style="width: 160px; vertical-align: bottom;">When</th>
+				<th style="vertical-align: bottom;">Event</th>
+				<th style="width: 80px; text-align: center;">Signups</th>
+				<th style="width: 50px; text-align: center;">Plan?</th>
+				<th style="width: 70px;"></th>
+			</tr>
+
+			<% @next_ten_events.each do |e| %>
+				<tr>
+					<td><%= e.begins_at.strftime("%m/%d/%y @ %H:%M (%Z)") %></td>
+					<td><%= link_to(e.title, admin_event_url(e)) %></td>
+					<td style="text-align: center;"><%=h e.calendar_event_signups.size %></td>
+					<td style="text-align: center;">
+						<% if e.has_plan? %>
+							yes
+						<% else %>
+							no
+						<% end %>
+					</td>
+					<td style="text-align: right;">
+						<%= link_to('Edit Plan', admin_event_plan_url(e)) %>
+					</td>
+				</tr>
+			<% end %>
+		</table>
+	<% end %>
+	
+</div>

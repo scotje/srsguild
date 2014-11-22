@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+	"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<title>srsguild: <%= yield(:title) || "an exceptional management platform for World of Warcraft raiding guilds" %></title>
+	
+	<%= render :partial => 'layouts/google_javascript_includes', :locals => { :admin => true } %>
+
+	<%= render :partial => 'layouts/yui_css_includes' %>
+	<%= stylesheet_link_tag 'static/960gs', 'static/prototip', 'static/datepicker', 'srsguild' %>
+</head>
+
+<body>
+<%= render :partial => 'layouts/flash_messages' %>
+<div id="Container" class="container_12">
+	<div id="Header" class="grid_12">
+		<div id="Header_Logo" class="grid_6 alpha">
+			<%= image_tag('srspanda.png', :style => 'float: left;') %>
+			<h1 style="padding: 25px 0 0 15px; float: left;"><%= link_to '<strong>srs</strong>guild', :controller => '/home' %></h1>
+		</div>
+		<div id="Header_Bonus" class="grid_6 omega">
+			<%= render :partial => @header_bonus_template if @header_bonus_template %>
+		</div>
+		<div class="clear"></div>
+	</div>
+	<div class="clear"></div>
+	
+	<div id="Body" class="grid_10">
+		<%= yield %>
+	</div>
+	
+	<div id="Nav" class="grid_2">
+		<ul>
+			<li><strong>Guild Management</strong></li>
+			<li class="<%= "highlight" if controller.controller_name == 'dashboards' %>"><%= link_to('Dashboard', admin_dashboard_url) %></li>
+			<li class="<%= "highlight" if controller.controller_name == 'events' %>"><%= link_to('Calendar', admin_events_url) %></li>
+			<li class="<%= "highlight" if controller.controller_name == 'plans' %>"><%= link_to('Planning', admin_plans_url) %></li>
+			<li class="<%= "highlight" if controller.controller_name == 'balances' %>"><%= link_to('Balances', admin_balances_url) %></li>
+			<li class="<%= "highlight" if controller.controller_name == 'roster' %>"><%= link_to('Roster', admin_roster_index_url) %></li>
+			<li class="<%= "highlight" if controller.controller_name == 'settings' %>"><%= link_to('Guild Settings', admin_settings_url) %></li>
+			<li><%= link_to('&laquo; Exit Management', guild_url) %></li>
+		</ul>
+	</div>
+	<div class="clear"></div>
+	
+	<div id="Footer" class="grid_12">
+		<div class="grid_5 alpha">
+			<p>&copy; <%= Time.new.strftime('%Y') %> newtonium labs &mdash; all rights reserved</p>
+		</div>
+		<div class="grid_2">
+			<p style="cursor: help; padding-top: 0; text-align: center; font-size: 146.5%; font-family: 'Lucida Sans Unicode', 'Arial Unicode MS', 'Symbol', sans-serif;" title="<%= render :partial => 'layouts/revision' %>">&weierp;</p>
+		</div>
+		<div class="grid_5 omega">
+			<p style="text-align: right;"> 
+				<%= link_to('blog', 'http://blog.srsguild.com/') %>&nbsp;&nbsp;
+				<%= link_to('@srsguild', 'http://twitter.com/srsguild') %>&nbsp;&nbsp;
+				<%= link_to('contact', :controller => '/home', :action => 'contact') %>&nbsp;&nbsp;
+				<%= link_to('security', :controller => '/home', :action => 'security') %>
+			</p>
+		</div>
+		<div class="clear"></div>
+	</div>
+	<div class="clear"></div>
+</div>
+<script type="text/javascript">
+var uservoiceOptions = {
+  /* required */
+  key: 'srsguild',
+  host: 'srsguild.uservoice.com', 
+  forum: '39796',
+  showTab: true,  
+  /* optional */
+  alignment: 'left',
+  background_color:'#000', 
+  text_color: 'white',
+  hover_color: '#06C',
+  lang: 'en'
+};
+
+function _loadUserVoice() {
+  var s = document.createElement('script');
+  s.setAttribute('type', 'text/javascript');
+  s.setAttribute('src', ("https:" == document.location.protocol ? "https://" : "http://") + "cdn.uservoice.com/javascripts/widgets/tab.js");
+  document.getElementsByTagName('head')[0].appendChild(s);
+}
+_loadSuper = window.onload;
+window.onload = (typeof window.onload != 'function') ? _loadUserVoice : function() { _loadSuper(); _loadUserVoice(); };
+</script>
+<% if Rails.env == 'production' %>
+	<script type="text/javascript">
+
+	  var _gaq = _gaq || [];
+	  _gaq.push(['_setAccount', 'UA-70954-5']);
+	  _gaq.push(['_setDomainName', '.srsguild.com']);
+	  _gaq.push(['_trackPageview']);
+
+	  (function() {
+	    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+	    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+	    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ga);
+	  })();                        
+
+	</script>
+<% end %>
+</body>
+</html>

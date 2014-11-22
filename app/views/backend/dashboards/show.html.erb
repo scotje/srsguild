@@ -1,0 +1,27 @@
+<h1>Dashboard</h1>
+
+<h2>Account Stats</h2>
+<p>
+	Total: <%= @real_account_stats.total_accounts %><br />
+	New Last Day: <%= @real_account_stats.new_last_24 %><br />
+	New Last Month: <%= @real_account_stats.new_last_month %><br />
+	New Last Quarter: <%= @real_account_stats.new_this_quarter %><br />
+</p>
+
+<h2>Guild Stats</h2>
+<p>
+	Total: <%= @real_guild_stats.total_guilds %><br />
+	New Last Day: <%= @real_guild_stats.new_last_24 %><br />
+	New Last Month: <%= @real_guild_stats.new_last_month %><br />
+	New Last Quarter: <%= @real_guild_stats.new_this_quarter %><br />
+	<br />
+	Avg Accounts Per Guild: <%= number_with_precision(@real_guild_stats.avg_accounts_per_guild, :precision => 2) %><br />
+	Avg Chars Per Guild: <%= number_with_precision(@real_guild_stats.avg_chars_per_guild, :precision => 2) %><br />
+</p>
+
+<h2>Character Stats</h2>
+<p>
+	Avg Chars Per Account: <%= number_with_precision(@real_char_stats.avg_chars_per_account, :precision => 2) %><br />
+</p>
+
+

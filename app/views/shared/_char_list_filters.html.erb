@@ -1,0 +1,28 @@
+<div id="CharList_ClassFilter">
+	<h3>Class:</h3>
+	<ul>
+		<% character_classes.each_with_index do |cc, i| %>
+			<li><input type="checkbox" name="filter[char_class][<%= cc.gsub(/[^\w]/, '').downcase %>]" <% if session[:char_filters][:char_class][cc.gsub(/[^\w]/, '').downcase.to_sym] %>checked="checked"<% end %> /> <%= character_class_with_colorbox(cc) %></li>
+			
+			<% if (((i+1) % 3) == 0) %>
+				</ul>
+				<ul>
+			<% end %>
+		<% end %>
+	</ul>
+</div>
+
+<!--
+<div id="CharList_RoleFilter">
+	<h3>Role:</h3>
+	<ul>
+		<% [[:dps_m, "DPS (Melee)"], [:dps_r, "DPS (Ranged)"], [:healer, "Healer"], [:tank, "Tank"]].each do |r| %>
+			<li><input type="checkbox" name="filter[char_role][<%= r[0].to_s %>]" <% if session[:char_filters][:char_role][r[0]] %>checked="checked"<% end %> /> <%= r[1] %></li>
+		<% end %>
+	</ul>
+</div>
+-->
+
+<div id="CharList_FilterButtons">
+	<input type="submit" value="Apply Filters" />
+</div>

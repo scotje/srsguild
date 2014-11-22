@@ -1,0 +1,4 @@
+author: Semantosoph
+summary: Generates a table-based weekly HTML calendar that can be styled with CSS and shows appointments in it.
+license: MIT
+version: 0.0.5

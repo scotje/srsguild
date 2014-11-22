@@ -1,0 +1,18 @@
+Hi,
+
+Someone recently used this email address to create an account at our website,
+srsguild.com. 
+
+If you are expecting this email, please click on the link below to verify 
+your account. You must do this within 7 days or your account will be locked.
+
+<%= url_for(:host => @host, :controller => "accounts", :action => "verify", :verification_value => @account.email_verification_value) %>
+
+If none of this sounds familiar, you can safely ignore this email and the
+account will automatically expire after 7 days. If you would like us to 
+remove this account before that, please reply to this email with your request.
+
+
+Thanks!
+
+-- The srsguild.com Support Pandas

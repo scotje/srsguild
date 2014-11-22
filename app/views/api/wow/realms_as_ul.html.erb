@@ -1,0 +1,5 @@
+<ul>
+	<% @realms.each_with_index do |r, i| %>
+		<li><%= "#{r.name}<span class=\"informal\"> (#{r.realm_type.upcase})</span>" %></li>
+	<% end %>
+</ul>

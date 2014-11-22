@@ -1,0 +1,197 @@
+<% title 'my account' %>
+<div id="AccountIndex">
+	<h1 class="PageTitle">My Account</h1>
+
+	<div class="SectionHeading">
+		<h2>Main Character</h2>
+	</div>
+	
+	<% if @main_char.blank? %>
+		<p>You have not added any characters to your account yet, click the 'Add New Character' link below to get started. You should add your "main" character first.</p>
+	<% else %>
+		<ul class="CharacterList">
+			<li class="<%= @main_char.character_class_css_name %>_border">
+				<div class="CharIcon">
+					<%= image_tag(@main_char.icon_path) %>
+				</div>
+
+				<div class="CharInfo">
+					<h4 class="CharName"><%=h @main_char.name %></h4>
+					<%= char_guild_name(@main_char) %>
+					<p class="CharRaceClass">
+						<%=h @main_char.race %> &ndash; <%=h @main_char.character_class %>
+					</p>
+				</div>
+				
+				<div class="CharControls">
+					<% if @main_char.guild.nil? %>
+						<%= link_to("Create New Guild", new_guild_url) %><br />
+						<%= link_to('Join to Existing Guild', find_guild_account_character_url(@main_char)) %><br />
+					<% else %>
+						<%= link_to('Withdraw from Guild', withdraw_account_character_url(@main_char), :confirm => "Are you sure you want to withdraw all your characters from this guild?") %><br />
+					<% end %>
+					<%= link_to('Update from Armory', armory_update_account_character_url(@main_char)) %><br />
+					<%# link_to('Remove from Account', character_url(:id => @main_char), :method => :delete, :confirm => "Are you sure you want to delete this character from your account?") %>
+				</div>
+			</li>
+		</ul>
+		
+		<br />
+		
+		<% form_tag(account_character_url(@main_char), :method => :put, :class => 'srsform') do %>
+			<fieldset>
+				<legend>Character Settings</legend>
+				<div class="fieldrow">
+					<label for="main_char[event_role_preference]">Role Preference:</label>
+					<div class="field"><%= select(:main_char, :event_role_preference, calendar_signup_role_options, :style => "width: 140px;") %></div>
+				</div>
+				
+				<div class="fieldrow">
+					<label for="main_char[raid_spec]">Raid Spec:</label>
+					<div class="field">
+						<% if @main_char.armory_spec1.blank? %>
+							<p style="font-style: italic; margin: 0; padding-top: 4px;">Please <%= link_to('update from armory', armory_update_account_character_url(@main_char)) %> to enable this field.</p>
+						<% else %>
+							<%= select(:main_char, :raid_spec, @main_char.all_specs, :style => "width: 140px;") %>
+						<% end %>
+					</div>
+				</div>
+				
+				<script type="text/javascript" charset="utf-8">
+					// Help Tooltips
+					new Tip($('main_char_raid_spec'), 'Only the talent trees currently trained on your character are shown.<br /> Click "Update from Armory" above if these are out of date.', {
+						showOn: 'focus',
+						hideOn: 'blur',
+						hideOthers: true,
+						fixed: true,
+						stem: 'leftMiddle',
+						hook: { target: 'rightMiddle', tip: 'leftMiddle' },
+						offset: { x: 2, y: 0 },
+						width: 'auto'
+					});
+				</script>
+				
+				<div class="buttonrow">
+					<% center_buttons do %>
+						<button type="submit" class="button positive">
+							<%= image_tag('icons/tick.png') %> save character settings
+						</button>
+					<% end %>
+				</div>
+			</fieldset>
+		<% end %>
+	<% end %>
+	
+	<% unless @main_char.blank? %>
+		<div class="SectionHeading">
+			<h3>Alts</h3>
+		</div>
+
+		<% if @alts.blank? %>
+			<p style="margin: 0;">You have not added any alternate characters yet, click the 'Add New Character' link below to add one.</p>
+		<% else %>
+			<table class="simple">
+				<tr>
+					<th>Name</th>
+					<th style="width: 100px;">Class</th>
+					<th style="width: 100px;">Race</th>
+					<th style="width: 200px;"></th>
+				</tr>
+
+				<% @alts.each do |c| %>
+					<tr>
+						<td><%=h c.name %></td>
+						<td><%= character_class_with_colorbox(c.character_class) %></td>
+						<td><%=h c.race %></td>
+						<td style="text-align: right;">
+							<%= link_to('remove', account_character_url(c), :method => :delete, :confirm => "Are you sure you want to delete this character from your account?") %>
+							&nbsp;&nbsp;
+							<%= link_to('update', armory_update_account_character_url(c)) %>
+							<%# link_to('promote to main', promote_account_character_url(c), :confirm => "Are you sure you want to make this character your new main character?") %>
+						</td>
+					</tr>
+				<% end %>
+			</table>
+		<% end %>
+	<% end %>
+	
+	<% center_buttons do %>
+		<%= link_to("#{image_tag('icons/add.png')} add new character", new_account_character_url, :class => 'button') %>
+	<% end %>
+	
+	<% if @_GUILD.nil? %>
+		<% unless @main_char.blank? %>
+			<p style="padding-top: 1em; font-size: 116%;">
+				You have not joined your main character to a guild yet. You 
+				can do that in the "My Characters" section above or you can 
+				<%= link_to("set up a new guild", :controller => 'guild', :action => 'new') %>.
+			</p>
+		<% end %>
+	<% end %>
+	
+	<br />
+	<br />
+	
+	<% form_tag(account_url, :method => :put, :class => 'srsform') do %>
+		<fieldset>
+			<legend>Account Settings</legend>
+			<div class="fieldrow">
+				<label for="account[email]">Email Address:</label>
+				<div class="field"><%= text_field(:account, :email, :size => 24, :class => 'text') %></div>
+			</div>
+			
+			<div class="fieldrow">
+				<label for="account[new_password]">Change Password:</label>
+				<div class="field">
+					<%= password_field(:account, :password, :size => 24, :class => 'text') %>
+				</div>
+			</div>
+
+			<div class="fieldrow">
+				<label for="account[password_confirmation]">Confirm Password:</label>
+				<div class="field">
+					<%= password_field(:account, :password_confirmation, :size => 24, :class => 'text') %>
+				</div>
+			</div>
+			
+			<div class="fieldrow">
+				<label for="account[time_zone]">Your Time Zone:</label>
+				<div class="field">
+					<% unless @_GUILD.blank? or @_GUILD.guild_config.default_time_zone.blank? %>
+						<%= time_zone_select(:account, :time_zone, ActiveSupport::TimeZone.us_zones, :default => @_GUILD.guild_config.default_time_zone, :include_blank => true) %>
+					<% else %>
+						<%= time_zone_select(:account, :time_zone, ActiveSupport::TimeZone.us_zones, :default => "Pacific Time (US & Canada)", :include_blank => true) %>
+					<% end %>
+				</div>
+			</div>
+			
+			<div class="fieldrow">
+				<label for="account[mobile_number]">Mobile Number:</label>
+				<div class="field">
+					<%= text_field(:account, :mobile_number, :size => 24, :class => 'text', :style => "float: left;") %>
+					<%= image_tag('icons/phone.png', :style => "display: block; float: left; padding-top: 2px;") %>
+					<script type="text/javascript" charset="utf-8">
+						new Tip($('account_mobile_number'), '<%= escape_javascript(render(:partial => 'mobile_number_tooltip')) %>', {
+							showOn: 'focus',
+							hideOn: 'blur',
+							hideOthers: true,
+							fixed: true,
+							stem: 'bottomLeft',
+							hook: { target: 'topRight', tip: 'bottomLeft' },
+							offset: { x: 5, y: 0 },
+							width: 350
+						});
+					</script>
+				</div>
+			</div>
+			
+			<div class="buttonrow">
+				<% center_buttons do %>
+					<button type="submit" class="button positive">
+						<%= image_tag('icons/tick.png') %> save settings
+					</button>
+				<% end %>
+			</div>
+		</fieldset>		
+	<% end %>
+</div>

@@ -1,0 +1,7 @@
+<tr class="attendance_row">
+	<td style="text-align: center;"><a href="#" style="color: red; text-decoration: none;" onclick="dropRow(this.up(1)); return false;">X</a></td>
+	<td><%=h @char.name %><%= hidden_field_tag("attendance[#{@char.id}][id]", @char.id, {:class => 'char_id'}) %></td>
+	<td><%=h @char.character_class %></td>
+	<td><%= text_field_tag("attendance[#{@char.id}][notes]", nil, { :style => "width: 100%;", :class => 'text' }) %></td>
+	<td style="color: #ccc; text-align: right; font-weight: bold;"><%= @count %></td>
+</tr>

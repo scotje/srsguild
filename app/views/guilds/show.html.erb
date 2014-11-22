@@ -1,0 +1,61 @@
+<% title h(@_GUILD.name) %>
+<div id="GuildIndex">
+	<h1 class="GuildTitle"><%= @_GUILD.name %></h1>
+
+	<div class="SectionHeading">
+		<h2>This Week's Events</h2>
+		<div class="heading_nav">
+			<% link_to(events_url, :class => 'button') do %>
+				<%= image_tag('icons/calendar_view_month.png') %> full calendar
+			<% end %>
+		</div>
+	</div>
+	<%= render :partial => 'events/single_week', :locals => { :date => Date.today, :events => @this_week } %>
+
+	<div class="SectionHeading">
+		<h2>Roster</h2>
+		<div class="heading_nav">
+			<% link_to(roster_index_url, :class => 'button') do %>
+				<%= image_tag('icons/calendar_view_month.png') %> full roster
+			<% end %>
+		</div>
+	</div>
+	<% if @_GUILD.armory_sync_in_progress? %>
+		<div class="async_status" id="guild_roster_sync">
+			<h3><%= image_tag('loading-arrows-on-96e97c.gif') %> Currently Synchronizing With Armory...</h3>
+			<p>(So any information shown below may be a little out of date.)</p>
+		</div>
+		
+		<div class="async_status" id="guild_roster_sync_complete" style="display: none;">
+			<h3>Armory Sync Complete!</h3>
+			<p><%= link_to('Reload this page', guild_url) %> to see the latest information.</p>
+		</div>
+		
+		<script type="text/javascript" charset="utf-8">
+			// Poll for armory sync completion.
+			new PeriodicalExecuter(function(pe) {
+				new Ajax.Request('<%= url_for(_armory_sync_status_guild_url) %>', {
+				  method: 'get',
+				  onSuccess: function(resp) {
+					if (resp.responseJSON.status == 'complete') {
+						new Ajax.Request('<%= url_for(_acknowledge_armory_sync_complete_guild_url) %>', { method: 'put' });
+						$('guild_roster_sync').hide();
+						$('guild_roster_sync_complete').show();
+						pe.stop();
+					} else if (resp.responseJSON.status == 'idle') {
+						$('guild_roster_sync').hide();
+						pe.stop();
+					}
+				  }
+				});
+			}, 10);
+		</script>
+	<% end %>
+	<div id="GuildRosterSummary">
+		<p style="text-align: center;">
+			<%= roster_breakdown_chart(@_GUILD) %><br />
+			(Color shading indicates main characters versus total characters.)
+		</p>
+	</div>
+
+</div>

@@ -1,0 +1,24 @@
+<% title h("#{@_GUILD.name} Manage Balances") %>
+<div id="GuildManage_Balances_New">
+	<h1 class="GuildTitle"><%= @_GUILD.name %> Management: Balances</h1>
+
+	<% form_for([:admin, @balance_account], :url => admin_balances_path, :method => :post, :html => { :class => 'srsform'}) do %>
+		<fieldset>
+			<legend>New Balance Account</legend>
+		
+			<%= render :partial => 'form' %>
+		
+			<div class="buttonrow">
+				<% center_buttons do %>
+					<button type="submit" class="button positive">
+						<%= image_tag('icons/tick.png') %> create account
+					</button>
+					<% link_to(admin_balances_url, :class => "button negative") do %>
+						<%= image_tag('icons/cross.png') %> cancel
+					<% end %>
+				<% end %>
+			</div>
+		</fieldset>
+	<% end %>
+	
+</div>

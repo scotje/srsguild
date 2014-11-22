@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+	"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<title>srsguild: login</title>
+	
+	<% if (RAILS_ENV == 'production') %>
+		<%= stylesheet_link_tag 'http://yui.yahooapis.com/2.5.2/build/reset-fonts-grids/reset-fonts-grids.css' %>
+		<%= javascript_include_tag 'http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js' %>
+	<% else %>
+		<%= stylesheet_link_tag 'static/reset-fonts-grids' %>
+		<%= javascript_include_tag 'jquery.min.js' %>
+	<% end %>
+	
+	<%= stylesheet_link_tag 'login' %>
+	
+	<script type="text/javascript" charset="utf-8">
+		$(document).ready(function() {
+		  $('#login_email_field').trigger('focus');
+		});
+	</script>
+</head>
+
+<body>
+	<div id="LoginBox" <% if @guild %>class="with_guild"<% end %>>
+		<h1><strong>srs</strong>guild login</h1>
+		<div id="LoginBoxContent">
+			<% if @guild %>
+				<h2><%=h @guild.name %></h2>
+			<% end %>
+			
+			<% if flash[:error] %>
+				<p class="FlashErrorInline"><%= flash[:error] %></p>
+			<% end %>
+			<% if flash[:warning] %>
+				<p class="FlashWarningInline"><%= flash[:warning] %></p>
+			<% end %>
+			<% if flash[:notice] %>
+				<p class="FlashNoticeInline"><%= flash[:notice] %></p>
+			<% end %>
+			
+			<% form_tag({:controller => '/sessions', :action => 'create'}, :method => :post) do %>
+				<% if params[:for_admin] %>
+					<%= hidden_field_tag('for_admin', '1') %>
+				<% end %>
+			
+				<p><label for="email">e-mail address:</label><br />
+					<input id="login_email_field" class="field" type="text" name="email" value="" /></p>
+				
+				<p><label for="password">password:</label><br />
+					<input class="field" type="password" name="password" value="" /></p>
+				
+				<% link_to(root_url(:subdomain => false), :class => 'button negative') do %>
+					<%= image_tag('icons/arrow_left.png') %> cancel
+				<% end %>
+				<button type="submit" class="button positive" style="float: right;">
+					login <%= image_tag('icons/arrow_right.png') %>
+				</button>
+				<div style="clear: both; height: 0px; line-height: 0px; font-size: 0px;">&nbsp;</div>
+			<% end %>
+			
+			<% if @guild %>
+				<h3>Don't have an account?</h3>
+				<p>
+					<%=h @guild.name %> is using <strong>srs</strong>guild to 
+					manage their guild activities. If you are a member of this
+					guild and you haven't logged into this system before, 
+					<%= link_to('create an account', signup_url(:subdomain => current_subdomain)) %>
+					to get started!
+				</p>
+			<% end %>
+			
+			<div style="clear: both; height: 0px; line-height: 0px; font-size: 0px;">&nbsp;</div>
+		</div>
+	</div>
+
+</body>
+</html>

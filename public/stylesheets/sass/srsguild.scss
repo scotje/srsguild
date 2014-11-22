@@ -1,0 +1,409 @@
+$highlight_color: #F8F497;
+
+@import '_class_colors';
+@import '_flash_messages';
+@import '_forms';
+@import '_buttons';
+
+/* Tag Styles */
+
+html {
+	background-color: #ddd;
+	background-image: url('/images/bg-tile-test-2.png');
+	background-attachment: fixed;
+}
+
+body {
+	margin:			0;
+	padding:		0;
+	text-align:		left;
+}
+
+#Container {
+	background-color: #fff;
+	margin-bottom: 15px;
+
+	box-shadow: 0 0 5px #888;
+	-webkit-box-shadow: 0 0 5px #888;
+	-moz-box-shadow: 0 0 5px #888;
+}
+
+a {
+	color:			blue;
+}
+
+strong {
+	font-weight:	bold;
+}
+
+h1 {
+	font-size:		167%;
+	margin:			0 0 5px 0;
+}
+
+h1.GuildTitle, h1.PageTitle {
+	border-bottom:	1px solid #000;
+	border-top:		1px solid #000;
+	padding:		3px;
+	text-align:		center;
+	margin-bottom:	1em;
+}
+
+.SectionHeading {
+	position: relative;
+	margin:			1em 0;
+	border:			1px solid;
+	border-color:	#ddd #888 #888 #ddd;
+	color:			#444;
+	background-color: #ddd;
+	padding:		5px;
+	text-shadow:	1px 1px #fff;
+	
+	.heading_nav {
+		position :	absolute;
+		right:		0;
+		top:		0;
+		
+		font-size: 	100%;
+		
+		text-shadow: none;
+		
+		a.button, button {
+			margin-top: 2px;
+			margin-bottom: 0;
+		}
+	}
+	
+	.heading_info {
+		position :	absolute;
+		right:		5px;
+		bottom:		5px;
+		
+		font-size: 	100%;
+	}
+
+	h2, h3 {
+		width:		65%;
+		margin:		0;
+	}
+	
+}
+
+h2 {
+	font-size:		138.5%;
+	margin:			0 0 10px 0;
+}
+
+h3 {
+	font-size:		123.1%;
+	margin:			0 0 8px 0;
+}
+
+h4 {
+	font-size:		108%;
+	color:			#444;
+	margin:			0 0 1px 0;
+	border-bottom:	1px solid #ccc;
+}
+
+
+#Header {
+	font-family:	Arial, Helvetica, sans-serif;
+	padding:		0;
+	height: 		105px;
+	overflow: 		hidden;
+
+	#Header_Logo {
+		h1 {
+			font-size:		276.9%;	
+			font-weight:	normal;
+			margin-top:		0;
+		}
+	
+		a {
+			color:				#000;
+			text-decoration:	none;
+		}
+	}
+	
+	#Header_Bonus {
+		position: relative;
+		height: 105px;
+	}
+}
+
+#Nav {
+	ul {
+		margin:			0;
+		list-style:		none;
+		border-bottom:	1px solid #aaa;
+		
+		li {
+			margin:			0;
+			list-style:		none;
+			padding:		5px;
+			text-align:		center;
+
+			border-top:		1px solid #aaa;
+		}
+	}
+}
+
+
+#Footer {
+	font-family:	"Lucida Sans Unicode", "Lucida Grande", Verdana, sans-serif;
+	font-size:		108%;
+	
+	border-top:		1px solid #aaa;
+	
+	overflow:		none;
+	
+	margin-top:		15px;
+	
+	p {
+		padding-top:	10px;
+	}
+}
+
+
+#signup_form {
+	p {
+		margin-bottom:	1em;
+	}
+}
+
+.join_search_match {
+	background-color: 	#ddd;
+	padding: 			20px;
+	margin-bottom:		10px;
+	border:				1px solid #888;
+}
+
+.pagination {
+	text-align:			center;
+	font-size: 			1.15em;
+}
+
+
+.highlight {
+	background-color:		$highlight_color;
+}
+
+ul.CharacterList {
+	margin:			0;
+	list-style:		none;
+}
+	
+
+ul.CharacterList li, .CharacterSummary {
+	margin:			0;
+	padding:		8px;
+	list-style:		none;
+	display:		block;
+	overflow:		auto;
+	
+	border-width:	4px;
+	border-style:	solid;
+	
+	.CharIcon {
+		float:			left;
+		padding-right:	10px;
+		
+		img {
+			border:		1px solid #000;
+		}
+	}
+	
+	.CharInfo {
+		float:			left;
+		
+		h4.CharName {
+			color:			#000;
+			border:			0;
+			margin:			0;
+			font-size:		153.9%;
+		}
+	}
+	
+	.CharControls {
+		float:			right;
+		padding-top:	10px;
+		
+		text-align:		right;
+	}
+}
+
+
+.table_headings {
+	th {
+		font-style:		italic;
+		padding:		3px;
+		padding-bottom:	8px;
+	}
+}
+
+.char_row {
+	td {
+		padding:		3px;
+		border-bottom:	1px solid #aaa;
+	}
+}
+
+
+.auto_complete {
+	position:	relative;
+
+	background-color:		#fff;
+	border:					1px solid #ccc;
+	
+	ul {
+		margin:				0;
+		list-style-type:	none;
+		
+		li {
+			list-style-type:	none;
+			
+			padding:		3px 6px;
+		}
+		
+		li.selected {
+			background-color:	$highlight_color;
+		}
+		
+		li:hover {
+			background-color:	$highlight_color;
+			cursor:				pointer;
+		}
+	}
+}
+
+table.simple {
+	width:					100%;
+
+	tr {
+		th, td {
+			border:			0;
+			padding:		3px;
+		}
+	
+		th {
+			text-align:		left;
+			border-bottom:	1px solid #ddd;
+		}
+
+		td {
+			p {
+				margin:		0;
+				padding:	0;
+			}
+		}
+	}
+	
+	tr.odd {
+		td {
+			background-color: #eee;
+		}
+	}
+	
+	tr.even {
+		td {
+			background-color: #ddd;
+		}
+	}
+}
+
+#CharListFilters {
+	width: 					100%;
+	margin:					15px 0;
+	
+	h3 {
+		width: 				65px;
+		float:				left;
+		margin:				0;
+	}
+	
+	#CharList_ClassFilter {
+		width: 				100%;
+		padding: 			5px 10px;
+
+		overflow: 			auto;
+	
+		ul {
+			width: 			20%;
+			float: 			left;
+			margin:			0;
+			padding:		0;
+			
+			list-style-type:	none;
+			
+			li {
+				list-style-type:	none;
+				padding: 			1px 0;
+			}
+		}
+	}
+	
+	#CharList_RoleFilter {
+		width: 				100%;
+		padding: 			5px 10px;
+
+		overflow: 			auto;
+	
+		ul {
+			margin:			0;
+			padding:		0;
+			
+			list-style-type:	none;
+			
+			li {
+				width: 			20%;
+				float: 			left;
+
+				list-style-type:	none;
+			}
+		}
+	}
+	
+	#CharList_FilterButtons {
+		padding:			5px 0 0 75px;
+	}
+}
+
+.async_status {
+	margin: 10px 0;
+	padding: 15px 5px;
+	
+	border: 1px solid #000;
+	border-width: 1px 0;
+	
+	background-color: $flashNotice;
+	
+	h3 {
+		margin: 0;
+		text-align: center;
+		
+		img {
+			vertical-align: text-bottom;
+		}
+	}
+	
+	p {
+		margin: 0;
+		text-align: center;
+	}
+}
+
+// Sub-sections.
+@import 'sections/_guild';
+@import 'sections/_calendar';
+@import 'sections/_homepage';
+@import 'sections/_tour';
+
+// Admin sub-sections.
+@import 'admin/_dashboard';
+@import 'admin/_calendar';
+@import 'admin/_balances';
+@import 'admin/_settings';
+@import 'admin/_plans';
+
+@import 'backend';

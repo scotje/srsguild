@@ -1,0 +1,19 @@
+<%=raw schedule(:day => date, :first_day_of_week => 2, :show_today => true, :show => events) %>
+<script type="text/javascript" charset="utf-8">
+	<% events.each do |e| %>
+		new Tip($('event_link_<%= e.id %>'),
+		{
+			ajax: { url: '<%= event_url(e) %>', options: { method: 'get' } },
+			title: '<%= link_to(escape_javascript(e.title), event_url(e)) %>',
+			style: 'protogrey',
+			stem: 'leftMiddle',
+			showOn: 'click',
+			hideOn: false,
+			closeButton: true,
+			hideOthers: true,
+			hook: { target: 'rightMiddle', tip: 'leftMiddle', mouse: false },
+			offset: { x: -7, y: 0 },
+			width: 200
+		});
+	<% end %>
+</script>

@@ -1,0 +1,40 @@
+<div class="fieldrow">
+	<label for="<%= model %>[region]">Region:</label>
+	<div class="field">
+		<select id="realm_region_select" name="<%= model %>[region]">
+			<% if defined? region_preselect %>
+				<%= options_for_realm_regions(region_preselect) %>
+			<% else %>
+				<%= options_for_realm_regions %>
+			<% end %>
+		</select>
+	</div>
+</div>
+
+<div class="fieldrow">
+	<label for="<%= model %>[realm]">Realm:</label>
+	<div class="field">
+		<select id="realm_select" name="<%= model %>[realm]">
+			<% if defined? realm_preselect %>
+				<%= options_for_realms_us(realm_preselect) %>
+			<% else %>
+				<%= options_for_realms_us %>
+			<% end %>
+		</select>
+		<%= image_tag('loading-on-dddddd.gif', :id => 'realm_loading', :style => 'display: none; padding: 1px 0;') %>
+	</div>
+</div>
+
+<script type="text/javascript" charset="utf-8">
+	$('realm_region_select').observe('change', function() {
+		$('realm_select').hide();
+		$('realm_loading').show();
+		
+		new Ajax.Updater('realm_select', '<%= url_for(:controller => "/api/wow", :action => "realms") %>/' + this.options[this.selectedIndex].value, {
+			onComplete: function() {
+				$('realm_loading').hide();
+				$('realm_select').show();
+			}
+		});
+	});
+</script>

@@ -1,0 +1,16 @@
+<% form_tag({:action => 'find_guild', :id => char.id}, {:method => 'post', :class => 'srsform'}) do %>
+	<fieldset>
+		<%= render :partial => "/shared/region_realm_select", :locals => { :realm_preselect => char.realm, :model => 'guild' } %>
+
+		<div class="fieldrow">
+			<label for="search_name">Guild Name:</label>
+			<div class="field">
+				<input type="text" name="search_name" size="30" class="text" />
+			</div>
+		</div>
+
+		<div class="buttonrow">
+			<%= submit_tag('search for my guild') %>
+		</div>
+	</fieldset>
+<% end %>

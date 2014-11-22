@@ -1,0 +1,49 @@
+<div class="fieldrow">
+	<label for="event[title]">Title</label>
+	<div class="field"><%= text_field(:event, :title, {:class => 'text', :style => 'width: 400px;'}) %></div>
+</div>
+
+<div class="fieldrow">
+	<label for="event[start_date]">Date</label>
+	<div class="field">
+		<%= text_field(:event, :start_date, {:id => 'event_start_date', :class => 'text', :style => 'width: 100px;', :onfocus => "datePickerController.show(this.id);", :onblur => "datePickerController.hide(this.id);", :readonly => true}) %>
+		<script type="text/javascript">
+			var opts = {                      
+				formElements:{"event_start_date":"Y-ds-m-ds-d"},
+				statusFormat:"l-cc-sp-d-sp-F-sp-Y",
+				rangeLow:"<%= Time.new.strftime("%Y%m%d") %>",
+				noFadeEffect:true,
+				noDrag:true,
+				finalOpacity:97
+			};      
+
+			datePickerController.createDatePicker(opts);
+		</script>
+	</div>
+</div>
+
+<div class="fieldrow">
+	<label for="event[start_time]">Start Time</label>
+	<div class="field"><%= time_select(:event, :start_time, {:minute_step => 15, :ignore_date => true}) %> (<%= Time.zone.now.strftime("%Z") %>)</div>
+</div>
+
+<div class="fieldrow">
+	<label for="event[organizer]">Organizer</label>
+	<div class="field"><%= select_tag('event[organizer]', options_for_select(@_GUILD.main_characters.find(:all, :order => 'name ASC').collect{ |c| [c.name, c.id] }, @_MAIN_CHAR.id), {:style => "width: 140px;"}) %></div>
+</div>
+
+<div class="fieldrow">
+	<label for="event[attendance_policy]">Attendance</label>
+	<div class="field">
+		<select name="event[attendance_policy]">
+			<option <%= 'selected="selected"' if (@event.attendance_policy == 'required') %> value="required">Required</option>
+			<option <%= 'selected="selected"' if (@event.attendance_policy == 'optional') %> value="optional">Optional</option>
+			<option <%= 'selected="selected"' if (@event.attendance_policy == 'bonus') %> value="bonus">Bonus</option>
+		</select>
+	</div>
+</div>
+
+<div class="fieldrow">
+	<label for="event[comments]">Comments</label>
+	<div class="field"><%= text_area(:event, :comments, :style => "width: 400px; height: 4em;") %></div>
+</div>

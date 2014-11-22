@@ -1,0 +1,31 @@
+<% title h("#{@_GUILD.name} Manage Balances") %>
+<div id="GuildManage_Balances">
+	<h1 class="GuildTitle"><%= @_GUILD.name %> Management: Balances</h1>
+
+	<div id="BalanceAccounts">
+		<table class="simple">
+			<tr>
+				<th>Account Name</th>
+				<th style="width: 160px;">Last Modified</th>
+				<th style="width: 200px;"></th>
+			</tr>
+
+			<% @balance_accounts.each do |a| %>
+				<tr>
+					<td><%= link_to(a.name, admin_balance_url(a)) %></td>
+					<td><%= a.last_modified_date.nil? ? "--" : a.last_modified_date.strftime("%m/%d/%y @ %H:%M (%Z)") %></td>
+					<td style="text-align: right;">
+						<%= link_to 'edit/adjust', edit_admin_balance_url(a) %>
+					</td>
+				</tr>
+			<% end %>
+		</table>
+		
+		<% center_buttons do %>
+			<% link_to(new_admin_balance_url, :class => 'button') do %>
+				<%= image_tag('icons/add.png') %> new balance account
+			<% end %>
+		<% end %>
+	</div>
+	
+</div>

@@ -1,0 +1,39 @@
+<% title 'account created' %>
+<h2>Success!</h2>
+
+<p>
+	Your account was successfully created. (Huzzah!) You are already 
+	logged in and can use your new account right away.
+</p>
+	
+<p>
+	In order to make sure you didn't type in your e-mail address wrong or 
+	something, we're going to send a message to the address you provided in 
+	the next few minutes. Inside that message will be a link you can click
+	on to verify your address. If you don't do this sometime in the next week
+	we'll have to disable your account, so it's best to do it right away so
+	you don't forget! 
+</p>
+
+<p>
+	(If you don't see the message in your inbox within 15
+	minutes, check to see if your spam filter ate it. The message will come 
+	from "support@srsguild.com".)
+</p>
+	
+<h3>What Should I Do Next?</h3>
+
+<% if @_GUILD %>
+	<p>
+		Well, you have already set up your main character, so you can either
+		go straight to <%= link_to('your guild page', guild_url) %> or you 
+		could hit up <%= link_to('your account page', account_url) %> to set
+		some preferences.
+	</p>
+<% else %>
+	<p>
+		If you are a guild leader, you should <%= link_to('set up a new guild', new_guild_url) %> 
+		but if you are joining an existing guild, go ahead and set up your  
+		characters on <%= link_to('your account page', account_url) %>.
+	</p>
+<% end %>

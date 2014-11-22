@@ -1,0 +1,12 @@
+<% @realms.each_with_index do |r, i| %>
+	<% if (r.subregion != @realms[i-1].subregion) %>
+		<% unless (r == @realms.first) %>
+			</optgroup>
+		<% end %>
+		
+		<optgroup label="<%= r.subregion %>">
+	<% end %>
+
+	<option value="<%=h r.name %>"><%= "#{r.name} (#{r.realm_type.upcase})" %></option>
+<% end %>
+</optgroup>

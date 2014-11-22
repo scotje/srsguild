@@ -1,0 +1,46 @@
+<% title h("#{@_GUILD.name} Balances") %>
+<div id="BalancesShow">
+
+	<h1 class="GuildTitle"><%= @_GUILD.name %>: Balances</h1>
+
+	<div class="clearfix">
+		<% link_to(balances_url, :class => 'button', :style => 'margin: 0;') do %>
+			<%= image_tag('icons/arrow_turn_left.png') %> back to accounts
+		<% end %>
+	</div>
+
+	<div class="SectionHeading">
+		<h2><%=h @ba.name %></h2>
+	</div>
+
+	<div id="CharListFilters">
+		<%# debug session[:char_filters] %>
+		
+		<% form_tag(filter_balance_url(:id => @ba.id), :method => :post) do %>
+			<%= render :partial => 'shared/char_list_filters' %>
+		<% end %>
+	</div>
+
+	<table class="simple">
+		<tr>
+			<th style="width: 20px;"></th>
+			<th style="width: 200px;">Name</th>
+			<th style="width: 125px;">Class</th>
+			<th>Last Transaction</th>
+			<th style="text-align: center;">Balance</th>
+			<th></th>
+		</tr>
+
+		<% @ba.filtered_characters_with_balance(session[:char_filters]).each do |cb| %>
+			<tr <% if cb.id == @_MAIN_CHAR.id %>class="highlight"<% end %>>
+				<td></td>
+				<td><%=h cb.name %></td>
+				<td><%= character_class_with_colorbox(cb.character_class) %></td>
+				<td><%= cb.updated_at.nil? ? "--" : cb.updated_at.strftime("%m/%d/%y @ %H:%M (%Z)") %></td>
+				<td style="text-align: center;"><%= number_with_precision(cb.balance || 0, :precision => 2) %></td>
+				<td style="text-align: right;"><%= link_to('history', balance_history_url(:balance_id => @ba.id, :char_id => cb.id)) %></td>
+			</tr>
+		<% end %>
+	</table>
+
+</div>

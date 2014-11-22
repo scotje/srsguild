@@ -1,0 +1,5 @@
+<% if @_MAIN_CHAR.signed_up_for?(@event) %>
+	You <span style="color: #0f0;">are</span> signed up to attend<br /> this event. (<%= link_to('edit', event_url(@event)) %>)
+<% else %>
+	You <span style="color: #f00;">are not</span> signed up to<br /> attend this event.
+<% end %>

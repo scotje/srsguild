@@ -1,0 +1,33 @@
+wow icon filename format
+0-0-0.gif
+
+first number, gender:
+	0	male
+	1	female
+	
+second number, race:
+	1	human
+	2	orc
+	3	dwarf
+	4	night elf
+	5	undead
+	6	tauren
+	7	gnome
+	8	troll
+	10	blood elf
+	11	draenei
+	
+	
+third number, class:
+	1	warrior
+	2	paladin
+	3	hunter
+	4	rogue
+	5	priest
+	6	death knight
+	7	shaman
+	8	mage
+	9	warlock
+	11	druid
+	
+	

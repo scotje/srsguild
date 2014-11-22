@@ -1,0 +1,46 @@
+<% title h("#{@_GUILD.name} Roster") %>
+<div id="RosterShow">
+
+	<h1 class="GuildTitle"><%= @_GUILD.name %>: Roster</h1>
+
+	<div class="clearfix">
+		<% link_to(roster_index_url, :class => 'button', :style => 'margin-top: 0;') do %>
+			<%= image_tag('icons/arrow_turn_left.png') %> back to roster
+		<% end %>
+	</div>
+
+	<div class="CharacterSummary <%= @char.character_class_css_name %>_border">
+		<div class="CharIcon">
+			<%= image_tag(@char.icon_path) %>
+		</div>
+
+		<div class="CharInfo">
+			<h4 class="CharName"><%=h @char.name %></h4>
+			<%= char_guild_name(@char) %>
+			<p class="CharRaceClass">
+				<%=h @char.race %> &ndash; <%=h @char.character_class %> <%=h "(#{@char.raid_spec})" unless @char.raid_spec.blank? %>
+			</p>
+		</div>
+	</div>
+	
+	<div class="SectionHeading">
+		<h2><%=h @char.name %>'s Balances</h2>
+	</div>
+	<table class="simple">
+		<% @balance_accounts.each do |a| %>
+			<tr>
+				<td><%=h a.name %></td>
+				<td style="width: 160px;"><%= number_with_precision(a.balance || 0, :precision => 2) %></td>
+				<td style="width: 100px; text-align: right;">
+					<%= link_to 'view detail', balance_url(a) %>
+				</td>
+			</tr>
+		<% end %>
+	</table>
+	
+
+	<div class="SectionHeading">
+		<h2><%=h @char.name %>'s Recent Attendance History</h2>
+	</div>
+	<%= render :partial => 'shared/attendance_list', :locals => { :events => @past_events, :char => @char } %>
+</div>

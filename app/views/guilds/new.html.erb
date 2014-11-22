@@ -1,0 +1,63 @@
+<% title 'create new guild' %>
+<div class="SectionHeading">
+	<h2>New Guild</h2>
+</div>
+
+<p>
+	Great, let's get started! First we need to know the name of your guild and 
+	what realm you play on. Once we have that information we will automatically 
+	import your roster from the official World of Warcraft Armory.
+</p>
+
+<p>
+	We also need to know what subdomain you would like to use as a shortcut
+	to access your guild. 
+</p>
+
+<% form_tag({:action => 'create'}, {:id => 'signup_form', :class => 'srsform'}) do %>
+	<fieldset>
+		<%= render :partial => 'form' %>
+		
+		<div class="fieldrow">
+			<label for="min_rank">Lowest Rank to Import:</label>
+			<div class="field">
+				<select name="min_rank">
+					<option value="0">Guild Leader Only</option>
+					<option value="1">Rank 1</option>
+					<option value="2">Rank 2</option>
+					<option value="3">Rank 3</option>
+					<option value="4">Rank 4</option>
+					<option value="5">Rank 5</option>
+					<option value="6">Rank 6</option>
+					<option value="7" selected="selected">Rank 7</option>
+					<option value="8">Rank 8</option>
+					<option value="9">Rank 9</option>
+				</select>
+				
+				&nbsp;<a href="#" id="guild_import_min_rank" onclick="return false;">?</a>
+				
+				<script type="text/javascript" charset="utf-8">
+					new Tip($('guild_import_min_rank'), "You can control which characters from your guild we automatically import based on their guild rank. Select the lowest guild rank that you want to be imported. (Choose Rank 9 if you want to import all characters, this may take some time if you have a large guild.) <strong>Note: Only max level characters will be automatically imported.</strong>", {
+						showOn: 'click',
+						hideOn: 'click',
+						hideOthers: true,
+						fixed: true,
+						stem: 'bottomLeft',
+						hook: { target: 'topRight', tip: 'bottomLeft' },
+						offset: { x: 0, y: 0 },
+						width: '400px'
+					});
+				</script>
+			</div>
+		</div>
+
+		<div class="buttonrow">
+			<% center_buttons do %>
+				<button type="submit" class="button positive">
+					<%= image_tag('icons/tick.png') %>Create
+				</button>
+				<%= link_to("#{image_tag('icons/cross.png')} Cancel", account_url, :class => 'button negative') %>
+			<% end %>
+		</div>
+	</fieldset>
+<% end %>

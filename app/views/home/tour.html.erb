@@ -1,0 +1,148 @@
+<% title 'tour' %>
+<div id="Home_Tour">
+	<h1>Tour</h1>
+	<p style="font-size: 16px;">
+		Learn a bit more about <strong>srs</strong>guild below. While we do 
+		our best to keep this tour up to date, we are adding new features all
+		the time, so the best way to explore our service is to 
+		<%= link_to('sign up for free', signup_url) %> and experience it
+		for yourself!
+	</p>
+	
+	<div class="TourBlock">
+		<div class="TourBlockScreenshot">
+			<%= image_tag('tour/event_signup.png') %>
+		</div>
+
+		<h2>Schedule Events</h2>
+		
+		<p>
+			With our simple interface, you can schedule a week's 
+			worth of events in under a minute. And your guild members can 
+			sign up for those events even faster.
+		</p>
+		
+		<p>
+			Users can easily indicate their preferred group role and leave
+			other comments with their signup, letting raid leaders know
+			what to expect when it's time to send out invites.
+		</p>
+		
+		<p>
+			The events calendar is fully timezone aware so all users will see
+			the correct date and time for every event. No confusion.
+		</p>
+		
+		<div class="clear"></div>
+	</div>
+
+	<div class="TourBlock">
+		<div class="TourBlockScreenshot">
+			<%= image_tag('tour/record_attendance.png') %>
+		</div>
+		
+		<h2>Record Attendance</h2>
+		
+		<p>
+			After an event, you can quickly record who attended. To speed 
+			things along, everyone who was signed up for the event is 
+			automatically copied into the attendance form. All you have to
+			do is make corrections, add some individual comments if you want,
+			and hit submit!
+		</p>
+		
+		<p>
+			Your members can then log in and review their attendance history
+			at any time. And if you've made a mistake, you can correct it in 
+			seconds.
+		</p>
+		
+		<p>
+			Events can be marked as "required", "optional", or "bonus" which
+			lets you control how an event will impact attendance 
+			calculations. You can reward users for showing up to an 
+			unscheduled weekend	raid or track attendance to your casual 
+			farming runs without impacting those who didn't attend.
+		</p>
+		
+		<div class="clear"></div>
+	</div>
+
+	<div class="TourBlock">
+		<div class="TourBlockScreenshot">
+			<%= image_tag('tour/balance_adjust.png') %>
+		</div>
+
+		<h2>Track Balances</h2>
+		
+		<p>
+			You can easily maintain a list of point balances for each
+			member of your guild. In fact, you can maintain as many different
+			sets of balances as you want. These sets are called 
+			"Balance Accounts" and each can be configured independently to do
+			things like maintain a zero-sum or calculate an automatic weekly
+			point decay.
+		</p>
+		
+		<p>
+			Every transaction automatically records who	made the adjustment 
+			and when. Each change can also include comments and be associated 
+			with an event from your calendar. This means you (and your guild 
+			members) have a full, reviewable history for every account.
+		</p>
+		
+		<div class="clear"></div>
+	</div>
+
+	<div class="TourBlock">
+		<div class="TourBlockScreenshot">
+			<%= image_tag('tour/roster_view.png') %>
+		</div>
+
+		<h2>Review Your Roster</h2>
+		
+		<p>
+			At a glance, you can see each member's attendance frequency and
+			when they last attended an event. Drill down to see a member's
+			character information, account balances, and full attendance
+			history on one convenient page.
+		</p>
+		
+		<p>
+			Each guild account on our service can configure a unique "join 
+			code" so that members can join themselves to the guild without
+			needing an administrator's intervention. But don't worry, if 
+			someone gets in that you don't want, it's easy to boot them out.
+		</p>
+		
+		<div class="clear"></div>
+	</div>
+
+	<div class="TourBlock">
+		<div class="TourBlockScreenshot">
+			<%= image_tag('tour/account_settings.png') %>
+		</div>
+
+		<h2>Manage Your Account</h2>
+		
+		<p>
+			When you set up your account, we pull in basic information
+			about your character directly from the World of Warcraft Armory.
+			You can then add things like your default group role, timezone,
+			etc.
+		</p>
+		
+		<p>
+			You can even add your Alts to your account, although at the 
+			moment you can't sign up for events with them. (We're working
+			on it!)
+		</p>
+		
+		<div class="clear"></div>
+	</div>
+
+	<p style="font-size: 16px; text-align: center;">
+		Heard enough? Want to see it for yourself? <%= link_to('Sign up now!', signup_url) %>
+	</p>
+	
+</div>

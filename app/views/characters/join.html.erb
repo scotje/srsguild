@@ -1,0 +1,36 @@
+<% title 'join guild' %>
+<h2>Join Character to Guild</h2>
+
+<% if @possible_guild %>
+	<% form_tag({:action => 'join', :id => @char}, {:method => 'post', :id => 'char_join_guild_form'}) do %>
+		<input type="hidden" name="possible_guild" value="<%= @possible_guild.id %>" />
+		<p>
+			It looks like maybe you belong to the following guild. If this is
+			correct, enter the guild's <strong>join code</strong> to verify
+			your membership. If you do not know your guild's code, check with
+			your guild's leaders.
+		</p>
+		
+		<p style="padding-left: 40px;">
+			<strong>Guild Name:</strong> <%= @possible_guild.name %><br />
+			<strong>Realm:</strong> <%= @possible_guild.realm %> (<%= @possible_guild.region.upcase %>)<br />
+			<br />
+			<label for="join_code">Join Code:</label><br />
+			<input type="text" name="join_code" size="12" /><br />
+			<br />
+			<%= submit_tag 'join guild' %>
+		</p>
+	<% end %>
+	
+	<p style="margin-top: 2em;">If this is not the guild you want to join, please use the form below to find your guild.</p>
+<% end %>
+
+<h3>Find Your Guild</h3>
+
+<p>
+	Enter your guild information below to find matching guilds in our system.
+</p>
+
+<div style="padding-left: 40px;">
+	<%= render :partial => 'guild_search' %>
+</div>

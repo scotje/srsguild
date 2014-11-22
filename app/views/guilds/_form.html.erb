@@ -1,0 +1,28 @@
+<div class="fieldrow">
+	<label for="guild_name">Guild Name:</label>
+	<div class="field">
+		<%= text_field :guild, :name, :size => 25, :class => 'text' %>
+	</div>
+</div>
+
+<%= render :partial => '/shared/region_realm_select', :locals => { :model => 'guild', :region_preselect => @guild.region, :realm_preselect => @guild.realm } %>
+
+<div class="fieldrow">
+	<label for="guild_subdomain">Choose Subdomain:</label>
+	<div class="field">
+		<%= text_field :guild, :subdomain, :size => 15, :class => 'text' %> .srsguild.com
+		
+		<script type="text/javascript" charset="utf-8">
+			new Tip($('guild_subdomain'), 'Use any combination of lowercase letters, numbers, and hyphens.', {
+				showOn: 'focus',
+				hideOn: 'blur',
+				hideOthers: true,
+				fixed: true,
+				stem: 'bottomLeft',
+				hook: { target: 'topRight', tip: 'bottomLeft' },
+				offset: { x: 0, y: 0 },
+				width: 'auto'
+			});
+		</script>
+	</div>
+</div>

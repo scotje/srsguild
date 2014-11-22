@@ -1,0 +1,20 @@
+<% if flash[:notice] %>
+	<div id="FlashNotice">
+		<p><%= flash[:notice] %></p>
+	</div>
+	<script type="text/javascript" charset="utf-8">
+		setTimeout(function() {
+			Effect.SlideUp('FlashNotice');
+		}, 4000);
+	</script>
+<% end %>
+<% if flash[:error] %>
+	<div id="FlashError">
+		<p><%= flash[:error] %></p>
+	</div>
+	<script type="text/javascript" charset="utf-8">
+		setTimeout(function() {
+			Effect.SlideUp('FlashError');
+		}, 6000);
+	</script>
+<% end %>

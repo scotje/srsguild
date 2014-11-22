@@ -1,0 +1,34 @@
+<% title h("#{@_GUILD.name} Roster") %>
+<div id="RosterIndex">
+
+	<h1 class="GuildTitle"><%= @_GUILD.name %>: Roster</h1>
+
+	<% form_tag(filter_roster_url) do %>
+		<div style="text-align: right; padding: 0 0 8px 0;">
+			<select name="timespan">
+				<%= options_for_select([["Last 30 days", 30], ["Last 90 days", 90], ["Last 6 months", 183], ["Last year", 365], ["All time", nil]], session[:roster_filters][:timespan]) %>
+			</select>
+			<input type="submit" value="apply" />
+		</div>
+	<% end %>
+
+	<table class="simple">
+		<tr>
+			<th>Character</th>
+			<th style="width: 100px;">Class</th>
+			<th style="width: 125px; text-align: center;">Role</th>
+			<th style="width: 150px; text-align: center;">Attendance</th>
+			<th style="width: 150px;">Last Attended</th>
+		</tr>
+
+		<% @roster.each do |c| %>
+			<tr>
+				<td><%= link_to(c.name, roster_url(c.id)) %></td>
+				<td><%= character_class_with_colorbox(c.character_class) %> <%= "(<span title=\"#{h(c.raid_spec)}\" style=\"cursor: help; border-bottom: 1px dotted silver;\">#{h(c.raid_spec[0,4])}</span>)" unless c.raid_spec.blank? %></td>
+				<td style="text-align: center;"><%=h c.guild_role || "--" %></td>
+				<td style="text-align: center;"><%= c.events_attended %>/<%= @event_count %> (<%= number_to_percentage(((@event_count == 0 ? 0 : (c.events_attended.to_f/@event_count.to_f))*100.0), :precision => 2) %>)</td>
+				<td><%= c.last_attended_at.blank? ? '--' : "#{time_ago_in_words(c.last_attended_at).capitalize} ago." %></td>
+			</tr>
+		<% end %>
+	</table>
+</div>

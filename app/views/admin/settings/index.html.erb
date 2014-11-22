@@ -1,0 +1,60 @@
+<% title h("#{@_GUILD.name} Manage Settings") %>
+<div id="GuildManage_Settings">
+	<h1 class="GuildTitle"><%= @_GUILD.name %> Management: Settings</h1>
+	
+	<% form_tag(update_all_admin_settings_url, :method => :put, :class => 'srsform') do %>
+		<fieldset>
+			<legend>General Settings</legend>
+		
+			<div class="fieldrow">
+				<label for="guild[subdomain]">Subdomain</label>
+				<div class="field"><%= text_field_tag('guild[subdomain]', @_GUILD.subdomain, {:class => 'text', :style => 'width: 100px; text-align: right;'}) %>.srsguild.com</div>
+				<script type="text/javascript" charset="utf-8">
+					new Tip($('guild_subdomain'), '<strong>Note:</strong> Changing this value will break any external links<br /> that have been made to the old subdomain.', {
+						showOn: 'focus',
+						hideOn: 'blur',
+						hideOthers: true,
+						fixed: true,
+						stem: 'bottomLeft',
+						hook: { target: 'topRight', tip: 'bottomLeft' },
+						offset: { x: 0, y: 0 },
+						width: 'auto'
+					});
+				</script>
+				<%= error_message_for_field(:subdomain) %>
+			</div>			
+
+			<div class="fieldrow">
+				<label for="config[default_time_zone]">Default Time Zone</label>
+				<div class="field"><%= time_zone_select(:config, :default_time_zone, ActiveSupport::TimeZone.us_zones, :default => "Pacific Time (US & Canada)", :include_blank => true) %></div>
+			</div>			
+		</fieldset>
+	
+		<fieldset>
+			<legend>Membership Settings</legend>
+			
+			<div class="fieldrow">
+				<label for="config[m_join_code]">Join Code</label>
+				<div class="field"><%= text_field(:config, :m_join_code, {:class => 'text', :style => 'width: 100px;'}) %></div>
+			</div>
+		</fieldset>
+		
+		<fieldset>
+			<legend>Calendar Settings</legend>
+			
+			<div class="fieldrow">
+				<label for="config[c_default_start_time]">Default Event Start</label>
+				<div class="field"><%= time_select(:config, :c_default_start_time, {:minute_step => 15}) %> (<%= Time.zone.now.strftime("%Z") %>)</div>
+			</div>			
+		</fieldset>
+		
+		<div class="buttonrow">
+			<% center_buttons do %>
+				<button type="submit" class="button positive">
+					<%= image_tag('icons/tick.png') %> save settings
+				</button>
+			<% end %>
+		</div>
+	<% end %>
+	
+</div>

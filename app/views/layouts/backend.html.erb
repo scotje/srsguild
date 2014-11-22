@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+	"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<title>srsguild backend</title>
+	
+	<%= render :partial => 'layouts/google_javascript_includes' %>
+	<%= javascript_include_tag 'prototip/prototip.js' %>
+	
+	<%= render :partial => 'layouts/yui_css_includes' %>
+	<%= stylesheet_link_tag 'static/960gs', 'static/prototip', 'srsguild' %>
+</head>
+
+<body>
+	<%= render :partial => 'layouts/flash_messages' %>
+
+	<div id="BackendContainer">
+		<%= yield %>
+	</div>
+
+</body>
+</html>

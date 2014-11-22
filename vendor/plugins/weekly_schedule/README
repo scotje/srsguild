@@ -1,0 +1,82 @@
+WeeklySchedule
+==============
+
+  VERSION = '0.0.5'
+
+  Returns an HTML week calendar. In its simplest form, this method generates a plain
+  calendar (which can then be customized using CSS) for the current week.
+  However, this may be customized in a variety of ways -- changing the default CSS
+  classes, populating the individual day entries with appointments, and so on.
+  
+  The following options are available for customizing the look of the calendar:
+
+    :table_class       => "calendar"        The class for the <table> tag.
+    :month_name_class  => "monthName"       The class for the name of the month, at the top of the table.
+    :day_name_class    => "dayName"         The class is for the names of the weekdays, at the top.
+    :day_class         => "day"             The class for the individual day number cells.
+
+    An additional 'weekend' class is applied to weekend days. 
+
+  The following options are available for customizing the behaviour of the calendar:
+
+    :day               => Date.today        This option specifies the day, whose week shall be displayed. 
+                                            Defaults to Date.today
+
+    :abbrev            => (0..2)            This option specifies how the day names should be abbreviated.
+                                            Use (0..2) for the first three letters, (0..0) for the first, and
+                                            (0..-1) for the entire name.
+
+    :first_day_of_week => 1                 Renders calendar starting on specific day. Use 1 for Monday
+                                            up to 7 for Sunday. This option applies only if :only_workdays
+                                            is set to false.
+
+    :show_today        => false             Highlights today on the calendar using the CSS class 'today'. 
+                                            Defaults to true.
+
+    :only_workdays     => true              Turns off weekend display. Defaults to false. When turned on, the
+                                            value of :first_day_of_week is fixed to 1 (monday). If :day is a
+                                            saturday or sunday, the *following* week is shown.
+
+    :show            => "appointment.title" This gives a hint where to search for info to show and is handed over
+                                            to details(). If set, the schedule is assumed to be in a "task list mode".
+                                            In this mode, if the object given in :show is empty, a "No work this week"
+                                            message is displayed instead of the schedule. Defaults to nil (showing a 
+                                            schedule with no info). 
+
+  *Example usage*
+
+    schedule()
+
+    This generates the simplest possible calendar.
+
+    schedule(:day => Date.civil(2009, 12, 25), :first_day_of_week => 1) 
+
+    This generates a calendar of christmas week 2009, showing the whole week from monday on.
+
+    schedule(:first_day_of_week => Date.today.cwday)
+
+    This generates a calendar that always starts with today.
+
+    schedule(:first_day_of_week => Date.today.cwday - 3)
+
+    This calendar starts three days earlier and therefore keeps today right in the middle of the display
+    
+
+  *A word about details()*
+
+    This function evaluates if something is given in in the :show option. The following should give you a rough idea
+    how this may be useful. Imagine, you've given @this_weeks_appointments as an array via the :show option. The 
+    value in date is the currently processed day as a Date object.
+    
+    def details(date, options)
+      if options[:show]
+        appointments = options[:show].select{|a| a.date == date}.sort_by{|t| t.ftime}
+        appointments.map{|a| "#{a.time}<br/>#{a.place}<br/><br/>"}
+    else
+      'Nothing to do today'
+    end
+  end
+
+
+Copyright (c) 2009 Semantosoph, released under the MIT license
+

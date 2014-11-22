@@ -1,0 +1,98 @@
+form.srsform {
+	
+	fieldset {
+		margin-bottom: 		10px;
+		border:				1px solid #ccc;
+		padding:			10px;
+		
+		legend {
+			padding:		0 4px;
+ 			font-weight: 	bold;
+		}
+	}
+		
+	div.fieldrow {
+		overflow:		auto;
+		padding:		5px 0;
+		margin:			2px 0;
+		background-color:	#eee;
+		
+		label {
+			display:	block;
+			padding:	4px 0 0 6px;
+			float:		left;
+			width:		140px;
+			
+			font-weight:	bold;
+		}
+		
+		div.field {
+			display:	block;
+			float: 		left;
+			
+			input {
+			}
+			
+			input.text, input.date {
+				padding:	2px;
+				border:		1px solid #ccc;
+			}
+			
+			input.checkbox {
+				
+			}
+			
+			input.radio {
+				
+			}
+			
+			select {
+				padding:	2px;
+			}
+			
+			textarea {
+				padding:	2px;
+				border:		1px solid #ccc;
+			}
+			
+			textarea.overflow {
+				background-color: #FFACAC;
+			}
+			
+		}
+		
+		span.overflow {
+			color: red;
+			font-weight: bold;
+		}
+
+		div.field_error {
+			float:			right;
+			
+			padding:		4px 4px 0 0;
+			color:			red;
+		}
+	}
+	
+	div.buttonrow {
+		padding:	12px 0 0 0;
+		
+		input, button, a {
+			/* Handled by buttons CSS now
+			padding:	4px;
+			margin:		0 8px;
+			font-size:	123.1%;
+			*/
+			margin-top: 0;
+			margin-bottom: 0;
+		}
+	}
+	
+}
+
+.generic_form {
+	input.text, input.date {
+		padding:	2px;
+		border:		1px solid #ccc;
+	}
+}

@@ -1,0 +1,97 @@
+<% title h("#{@_GUILD.name} Manage Calendar") %>
+<div id="GuildManage_Calendar">
+	<h1 class="GuildTitle"><%= @_GUILD.name %> Management: Calendar</h1>
+
+	<div class="SectionHeading">
+		<h2>Current Raid Week</h2>
+	</div>
+	<%= schedule(:day => Date.today, :first_day_of_week => 2, :show_today => true, :show => @this_week, :admin => true).html_safe %>
+
+	<p id="NewEventToggle">
+		<button class="button" onclick="$('NewEventToggle').hide(); $('NewEvent').show();">
+			<%= image_tag('icons/add.png') %> new event
+		</button>
+		<div class="clear"></div>
+	</p>
+
+	<div id="NewEvent" style="display: none;">
+		<% form_tag(admin_events_url, :method => :post, :class => 'srsform') do %>
+			<fieldset>
+				<legend>Create New Event</legend>
+
+				<%= render :partial => 'event_form_fields' %>
+
+				<div class="buttonrow">
+					<% center_buttons do %>
+						<button type="submit" class="button positive">
+							<%= image_tag('icons/tick.png') %> create
+						</button>
+						<%= link_to_function("#{image_tag('icons/cross.png')} cancel", "$('NewEvent').hide(); $('NewEventToggle').show()", :class => 'button negative') %>
+					<% end %>
+				</div>
+			</fieldset>
+		<% end %>
+	</div>
+
+	<% if @current_event and @current_event.calendar_event_attendances.blank? %>
+		<div id="RecordAttendance">
+			<div class="SectionHeading">
+				<h2>Record Attendance</h2>
+			</div>
+			<p><strong><%=h @current_event.title %></strong> &mdash; <%= @current_event.begins_at.strftime("%m/%d/%y @ %H:%M (%Z)") %></p>
+			<%= render :partial => 'attendance_edit', :locals => {:event => @current_event} %>
+		</div>
+	<% end %>
+
+	<div class="SectionHeading">
+		<h2>Future Events</h2>
+	</div>
+	<% if @future_events.blank? %>
+		<p>There are no events scheduled after the end of the current raid week.</p>
+	<% else %>
+		<table class="eventlist">
+			<tr>
+				<th style="width: 160px; vertical-align: bottom;">When</th>
+				<th style="vertical-align: bottom;">Event</th>
+				<th style="width: 80px; text-align: center;">Signups</th>
+			</tr>
+
+			<% @future_events.each do |e| %>
+				<tr>
+					<td><%= e.begins_at.strftime("%m/%d/%y @ %H:%M (%Z)") %></td>
+					<td><%= link_to(e.title, admin_event_url(e)) %></td>
+					<td style="text-align: center;"><%=h e.calendar_event_signups.size %></td>
+				</tr>
+			<% end %>
+		</table>
+	<% end %>
+
+	<div class="SectionHeading">
+		<h2>Recent Events</h2>
+	</div>
+	<% if @recent_events.blank? %>
+		<p>There are no recent events.</p>
+	<% else %>
+		<table class="eventlist">
+			<tr>
+				<th style="width: 160px; vertical-align: bottom;">When</th>
+				<th style="vertical-align: bottom;">Event</th>
+				<th style="width: 80px; text-align: center;">Attendance</th>
+			</tr>
+
+			<% @recent_events.each do |e| %>
+				<tr>
+					<td><%= e.begins_at.strftime("%m/%d/%y @ %H:%M (%Z)") %></td>
+					<td><%= link_to(e.title, admin_event_url(e)) %></td>
+					<td style="text-align: center;">
+						<%=h e.calendar_event_attendances.size %>/<%=h e.calendar_event_signups.size %>
+						<% if e.calendar_event_signups.size > 0 %>
+							(<%= number_to_percentage(e.calendar_event_attendances.size/e.calendar_event_signups.size*100, :precision => 0) %>)
+						<% end %>
+					</td>
+				</tr>
+			<% end %>
+		</table>
+	<% end %>
+
+</div>

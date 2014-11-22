@@ -1,0 +1,15 @@
+<% title h("#{@_GUILD.name} Calendar") %>
+<h1 class="GuildTitle"><%= @_GUILD.name %>: Calendar</h1>
+
+<div class="clearfix">
+	<% link_to(events_url, :class => 'button', :style => 'margin-top: 0;') do %>
+		<%= image_tag('icons/arrow_turn_left.png') %> back to calendar
+	<% end %>
+</div>
+
+<div class="SectionHeading">
+	<h2>Your Attendance History</h2>
+</div>
+<%= render :partial => 'shared/attendance_list', :locals => { :events => @events, :char => @_MAIN_CHAR } %>
+
+<%= will_paginate @events %>

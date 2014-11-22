@@ -1,0 +1,96 @@
+#event_signups_and_stats {
+	width: 401px;
+	float: right;
+
+	#event_signups, #event_stats {
+		padding: 2px 0 1px 0;
+
+		border: 1px solid #aaa;
+	}
+	
+	#event_signups {
+		min-height: 40px;
+
+		.plan_char {
+			cursor: move;
+		}
+	}
+	
+	#event_stats {
+		margin-top: 10px;
+
+		#event_stats_content {
+			padding: 0 5px;
+		}
+	}
+}
+
+.event_signups_hover {
+	background-color: #aaa;
+}
+
+.plan_char {
+	float: left;
+	width: 119px;
+	height: 18px;
+	overflow: hidden;
+	position: relative;
+
+	margin: 0 3px 2px 3px;
+	padding: 2px 3px 0 3px;
+	
+	background-color: #eee;
+	border: 1px solid #ccc;
+}
+
+.with_char_tools {
+	width: 138px;
+	z-index: 100;
+}
+
+.ui-draggable-dragging {
+	z-index: 10;
+}
+
+.group_slots {
+	min-height: 120px;
+	overflow: visible;
+}
+
+
+.raid_group {
+	width: 133px;
+	float: left;
+	padding: 2px 0 1px 0;
+	margin: 0 10px 10px 0;
+	
+	border: 1px solid #aaa;
+}
+
+.group_label {
+	padding: 0 0 2px 0;
+	
+	font-size: 11px;
+	text-transform: uppercase;
+	text-align: center;
+	color: #666;
+}
+
+#event_groups {
+	width: 300px;
+	float: left;
+	overflow: auto;
+}
+
+.raid_group_hover {
+	background-color: #aaa;
+}
+
+#saved_notice, #saving_notice {
+	font-size:	123.1%;
+	color:		#666;
+	
+	padding: 	7px 5px 0 0;
+	
+	display: 	none;
+}

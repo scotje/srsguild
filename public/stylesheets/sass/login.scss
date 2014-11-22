@@ -1,0 +1,67 @@
+@import '_flash_messages';
+@import '_buttons';
+
+html {
+	background-color:	#eeeeee;
+}
+
+h1 {
+	margin:			0 0 6px 0;
+
+	font-size:		36px;
+}
+
+h2 {
+	margin:			0 0 10px 0;
+	font-size:		24px;
+	text-align:		center;
+}
+
+h3 {
+	margin:			5px 0;
+	font-size:		16px;
+}
+
+a {
+	color:			blue;
+}
+
+strong {
+	font-weight:	bold;
+}
+
+#LoginBox {
+	position: 		absolute;
+	
+	top: 			50%; 
+	left: 			50%; 
+	
+	margin: 		-175px 0 0 -200px;
+	
+	width: 			400px; 
+	height: 		350px;
+	
+	text-align: 	left;
+}
+
+#LoginBox.with_guild {
+	height:			450px;
+	margin-top:		-225px;
+}
+
+#LoginBoxContent {
+	background-color:	white;
+	
+	padding:		20px;
+	
+	input.field {
+		width:			348px;
+		padding:		6px;
+
+		font-size:		18px;
+	}
+	
+	p {
+		margin-bottom:	14px;
+	}
+}

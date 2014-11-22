@@ -1,0 +1,113 @@
+<% title h("#{@_GUILD.name} Manage Calendar") %>
+<div id="GuildManage_Calendar_Show">
+	<h1 class="GuildTitle"><%= @_GUILD.name %> Management: Calendar</h1>
+
+	<div id="InCalendarNav">
+		<div class="grid_3 alpha">
+			<% unless @prev_event.nil? %>
+				<% link_to(admin_event_url(@prev_event), :class => 'button') do %>
+					<%= image_tag('icons/arrow_left.png') %> prev event
+				<% end %>
+			<% end %>
+		</div>
+		
+		<div class="grid_4">
+			<% center_buttons do %>
+				<% link_to(admin_events_url, :class => 'button') do %>
+					<%= image_tag('icons/arrow_turn_left.png') %> back to calendar
+				<% end %>
+			<% end %>
+		</div>
+		
+		<div class="grid_3 omega clearfix">
+			<% unless @next_event.nil? %>
+				<% link_to(admin_event_url(@next_event), :class => 'button clearfix', :style => 'float: right;') do %>
+					next event <%= image_tag('icons/arrow_right.png') %>
+				<% end %>
+			<% end %>
+		</div>
+	</div>
+	
+	<div class="SectionHeading">
+		<h2><%=h @event.title %></h2>
+		<div class="heading_info"><%= @event.begins_at.strftime("%m/%d/%Y / %I:%M %p (%Z)") %></div>
+	</div>
+	
+	<div id="EventSummary">
+		<div style="float: right;">
+			<% if @event.begins_at > Time.new %>
+				<% link_to(edit_admin_event_url(@event), :class => 'button', :style => "margin-top: 0;") do %>
+					<%= image_tag('icons/date_edit.png') %> edit event
+				<% end %>
+
+				<% link_to(admin_event_plan_url(@event), :class => 'button', :style => "margin-top: 0;") do %>
+					<%= image_tag('icons/date_go.png') %> event plan
+				<% end %>
+			<% end %>
+			<% link_to(admin_event_url(@event), :method => :delete, :confirm => "Are you sure you want to delete this event? This will also delete any signup and attendance data for this event.", :class => 'button negative', :style => "margin-top: 0;") do %>
+				<%= image_tag('icons/date_delete.png') %> delete event
+			<% end %>
+			<div class="clear"></div>
+		</div>
+
+		<p class="organizer">Organizer: <%= link_to(@event.organizer.name, :controller => 'roster', :action => 'show', :id => @event.organizer) %></p>
+		<p class="attendance">Attendance Policy: <%=h @event.attendance_policy.capitalize %></p>
+
+		<% unless @event.comments.blank? %>
+			<div class="comments">
+				<h3>Comments</h3>
+				<p><%=h @event.comments %></p>
+			</div>
+		<% end %>
+	</div>
+
+	<% if @event.begins_at < Time.new %>
+		<div class="SectionHeading">
+			<h3>Attendance</h3>
+		</div>
+
+		<div id="EventAttendance">
+			<% if @event.calendar_event_attendances.blank? %>
+				<p style="padding: 6px 0;">Note: <strong>No attendance has been recorded for this event yet</strong>, characters signed up for the event have been added to the attendance list below. Please make corrections and click save to record attendance.</p>
+			<% end %>
+
+			<%= render :partial => 'attendance_edit', :locals => {:event => @event} %>
+		</div>
+	<% end %>
+	
+	<div class="SectionHeading">
+		<h3>Signups</h3>
+	</div>
+
+	<div id="EventSignup">
+		<% if (Time.new > (@event.begins_at + 4.hours)) %>
+			<p id="event_past_notice">This event has already occurred, see <%= show_signups_link("who was signed up") %> when the event started.</p>
+		<% end %>
+
+		<div id="calendar_all_signups" <% if (Time.new > (@event.begins_at + 4.hours)) %>style="display: none;"<% end %>>
+			<% if @event.calendar_event_signups.blank? %>
+				<p>Nobody is signed up for this event.</p>
+			<% else %>
+				<table class="simple">
+					<tr>
+						<th style="width: 30px;"></th>
+						<th style="width: 150px;">Name</th>
+						<th style="width: 100px;">Class</th>
+						<th style="width: 125px;">Role Preference</th>
+						<th>Comments <span style="font-weight: normal; font-size: 0.9em;">(Hover mouse to expand truncated comments.)</span></th>
+					</tr>
+		
+					<% @event.calendar_event_signups.each_with_index do |signup, count| %>
+						<tr>
+							<td><%= count+1 %>.</td>
+							<td><%=h signup.character.name %></td>
+							<td><%= character_class_with_colorbox(signup.character.character_class) %></td>
+							<td><%=h printable_role_preference(signup.role_preference) %></td>
+							<td><%= p_truncated_at(signup.comments, 60) %></td>
+						</tr>
+					<% end %>
+				</table>
+			<% end %>
+		</div>
+	</div>
+</div>

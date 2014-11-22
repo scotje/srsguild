@@ -1,0 +1,45 @@
+<% title 'contact us' %>
+<div id="Contact">
+	<h1>Contact</h1>
+	
+	<div class="grid_8 alpha">
+		<p>
+			Got something on your mind? Well, you can always 
+			<%= link_to('send us an email', 'mailto:support@srsguild.com') %> or 
+			just fill out the form below. One of our specially trained support 
+			pandas will ponder your query for a few minutes, maybe munch on some
+			bamboo, and then send you a response as soon as possible!
+		</p>
+		
+		<p>
+			<em>If you have a concern about the safety or security of this 
+			application, you might want to review the information and resources
+			available on our <%= link_to('security page', security_url) %> 
+			instead of using this form.</em>
+		</p>
+	</div>
+	<div class="clear"></div>
+	
+	<% form_tag({:controller => 'home', :action => 'contact_submit'}, :method => :post, :class => 'srsform') do %>
+		<div class="fieldrow">
+			<label for="from_email">Your Email Address:</label>
+			<div class="field"><%= text_field_tag(:from_email, @from_email, :size => 32, :class => 'text') %></div>
+		</div>
+		
+		<div class="fieldrow">
+			<label for="message">Your Message:</label>
+			<div class="field">
+				<%= text_area_tag(:message, @message, :cols => 64, :rows => 10, :class => 'text') %><br />
+				<strong>(Don't send us your password or anything silly like that!)</strong>
+			</div>
+		</div>
+		
+		<div class="buttonrow">
+			<% center_buttons do %>
+				<button type="submit" class="button positive">
+					<%= image_tag('icons/email.png') %> send message
+				</button>
+			<% end %>
+		</div>
+	<% end %>
+</div>

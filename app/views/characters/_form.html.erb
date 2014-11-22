@@ -1,0 +1,29 @@
+<div class="fieldrow">
+	<label for="character[name]">Name:</label>
+	<div class="field"><%= text_field(:character, :name, :size => 24, :class => 'text') %></div>
+</div>
+
+<%= render :partial => '/shared/region_realm_select', :locals => { :region_preselect => 'US', :realm_preselect => @character.realm, :model => 'character' } %>
+
+<% if @extended_fields %>
+	<div class="fieldrow">
+		<label for="character[character_class]">Class:</label>
+		<div class="field">
+			<%= select(:character, :character_class, character_classes, {:include_blank => true}) %>
+		</div>
+	</div>
+
+	<div class="fieldrow">
+		<label for="character[race]">Race:</label>
+		<div class="field">
+			<%= select(:character, :race, character_races, {:include_blank => true}) %>
+		</div>
+	</div>
+
+	<div class="fieldrow">
+		<label for="character[gender]">Gender:</label>
+		<div class="field">
+			<%= select(:character, :gender, [["Female", "f"], ["Male", "m"]], {:include_blank => true}) %>
+		</div>
+	</div>
+<% end %>

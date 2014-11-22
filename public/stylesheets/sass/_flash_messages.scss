@@ -1,0 +1,39 @@
+$flashNotice: #96E97C;
+$flashError: #E97C7C;
+$flashWarning: #F8F497;
+
+#FlashNotice, #FlashError {
+	position:				absolute;
+	top:					0;
+	left:					0;
+	right:					0;
+	z-index:				100;
+	
+	p {
+		margin:				0;
+		padding:			10px;
+		font-size:			153.9%;
+		text-align:			center;
+	}
+}
+
+.FlashErrorInline, .FlashWarningInline, .FlashNoticeInline {
+	padding: 			12px; 
+}
+
+#FlashNotice, .FlashNoticeInline {
+	background-color:	$flashNotice;
+}
+
+#FlashError, .FlashErrorInline {
+	background-color:	$flashError;
+	
+	a {
+		color: white;
+	}
+}
+
+#FlashWarning, .FlashWarningInline {
+	background-color:	$flashWarning;
+}
+

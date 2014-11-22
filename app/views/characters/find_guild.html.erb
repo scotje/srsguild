@@ -1,0 +1,42 @@
+<% title 'join guild' %>
+<h1 class="PageTitle">Join Character to Guild</h1>
+
+<% if @guilds %>
+	<% @guilds.each do |guild| %>
+		<%= render :partial => "guild_search_match", :locals => { :char => @char, :guild => guild } %>
+	<% end %>
+
+	<% if @guilds.blank? %>
+		<p>
+			I'm sorry, we couldn't find any registered guilds that match your 
+			search. You can try searching again below or maybe you want to 
+			<%= link_to 'set up a new guild', :controller => 'guild', :action => 'new' %>?
+		</p>
+	<% end %>
+<% else %>
+	<% if @possible_guild %>
+		<% form_tag({:action => 'join', :id => @char}, {:method => 'post', :id => 'char_join_guild_form'}) do %>
+			<input type="hidden" name="possible_guild" value="<%= @possible_guild.id %>" />
+			<p>
+				It looks like maybe you belong to the following guild. If this is
+				correct, enter the guild's <strong>join code</strong> to verify
+				your membership. If you do not know your guild's code, check with
+				your guild's leaders.
+			</p>
+		
+			<%= render :partial => "guild_search_match", :locals => { :char => @char, :guild => @possible_guild } %>
+		<% end %>
+	
+		<p style="margin-top: 2em;">If this is not the guild you want to join, please use the form below to find your guild.</p>
+	<% end %>
+
+	<div class="SectionHeading">
+		<h2>Find Your Guild</h2>
+	</div>
+
+	<p>
+		Enter your guild information below to find matching guilds in our system.
+	</p>
+<% end %>
+
+<%= render :partial => 'guild_search', :locals => { :char => @char } %>

@@ -1,0 +1,30 @@
+<% title 'new character' %>
+<h1 class="PageTitle">New Character</h1>
+
+<% if flash[:errors] %>
+	<p class="error"><%=h flash[:errors].inspect %></p>
+<% elsif flash[:armory_error] %>
+	<p class="highlight" style="padding: 10px;">
+		We couldn't find the information for that character in the WoW Armory.
+		There are several possible reasons for this, but whatever the cause, 
+		all you need to do is fill in a little bit more information about your
+		character to continue.
+	</p> 
+<% end %>
+
+<% form_tag({:action => 'create'}, :method => 'post', :class => 'srsform') do %>
+	<fieldset>
+		<legend>New Character Info</legend>
+		
+		<%= render :partial => 'form' %>
+		
+		<div class="buttonrow">
+			<% center_buttons do %>
+				<button type="submit" class="button positive">
+					<%= image_tag('icons/tick.png') %>Save
+				</button>
+				<%= link_to("#{image_tag('icons/cross.png')} Cancel", account_url, :class => 'button negative') %>
+			<% end %>
+		</div>
+	</fieldset>
+<% end %>

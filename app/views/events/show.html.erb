@@ -1,0 +1,193 @@
+<% title h("#{@_GUILD.name} Calendar") %>
+<div id="CalendarShow">
+
+	<h1 class="GuildTitle"><%= @_GUILD.name %>: Calendar</h1>
+
+	<div id="InCalendarNav">
+		<div class="grid_3 alpha">
+			<% unless @prev_event.nil? %>
+				<% link_to(event_url(@prev_event), :class => 'button') do %>
+					<%= image_tag('icons/arrow_left.png') %> prev event
+				<% end %>
+			<% end %>
+		</div>
+		
+		<div class="grid_4">
+			<% center_buttons do %>
+				<% link_to(events_url, :class => 'button') do %>
+					<%= image_tag('icons/arrow_turn_left.png') %> back to calendar
+				<% end %>
+			<% end %>
+		</div>
+		
+		<div class="grid_3 omega clearfix">
+			<% unless @next_event.nil? %>
+				<% link_to(event_url(@next_event), :class => 'button clearfix', :style => 'float: right;') do %>
+					next event <%= image_tag('icons/arrow_right.png') %>
+				<% end %>
+			<% end %>
+		</div>
+	</div>
+	
+	<div class="SectionHeading">
+		<h2><%=h @event.title %></h2>
+		<div class="heading_info"><%= @event.begins_at.strftime("%m/%d/%Y / %I:%M %p (%Z)") %></div>
+	</div>
+	
+	<div id="EventSummary">
+		<p class="organizer"><em>Organizer:</em> <%= link_to(@event.organizer.name, roster_url(@event.organizer)) %></p>
+		<p class="attendance"><em>Attendance Policy:</em> <%=h @event.attendance_policy.capitalize %></p>
+		
+		<% unless @event.comments.blank? %>
+			<div class="comments">
+				<h4>Organizer's Comments</h4>
+				<p><%=h @event.comments %></p>
+			</div>
+		<% end %>
+	</div>
+	
+	<% if @event.has_plan? %>
+		<div id="EventPlan">
+			<div class="SectionHeading">
+				<h3>Group Plan</h3>
+			</div>
+			
+			<div id="plan_event_groups" style="overflow: auto; width: 580px; margin: 0 auto;">
+				<% @plan_group_slots.each_with_index do |group_chars, group_num| %>
+					<div id="raid_group-<%= group_num+1 %>" class="raid_group" <% if (((group_num.to_i+1) % 4) == 1) %>style="clear: both;"<% end %>>
+						<div class="group_label">Group <%= group_num+1 %></div>
+
+						<div class="group_slots">
+							<% group_chars.each do |gc| %>
+								<div id="plan_char-<%= gc.character.id %>" class="plan_char in_group">
+									<%= character_class_colorbox(gc.character.character_class) %> <%=h gc.character.name %> <%= "(<span title=\"#{h(gc.character.raid_spec)}\" style=\"cursor: help; border-bottom: 1px dotted silver;\">#{h(gc.character.raid_spec[0,1])}</span>)" unless gc.character.raid_spec.blank? %>
+								</div>
+							<% end %>
+						</div>
+					</div>
+				<% end %>
+			</div>
+		</div>
+	<% end %>
+
+	<% if @event.begins_at < Time.new %>
+		<div id="EventAttendance">
+			<div class="SectionHeading">
+				<h3>Attendance</h3>
+			</div>
+
+			<% if @event.calendar_event_attendances.blank? %>
+				<p>No attendance for this event has been recorded.</p>
+			<% else %>
+				<% @event.calendar_event_attendances.each do |att| %>
+					<div class="calendar_event_attendance <% if att.character == @_MAIN_CHAR %>highlight<% end %>">
+						<p><%= att.character.name %></p>
+					</div>
+				<% end %>
+			<% end %>
+		</div>
+	<% else %>
+		<div id="EventPersonalSignup">
+			<% if @personal_signup %>
+				<div class="SectionHeading">
+					<h3>Edit Your Signup</h3>
+				</div>
+				
+				<% form_tag(event_signup_url(:event_id => @event), :method => :put) do %>
+					<div class="highlight" style="padding: 8px;">
+						<div style="overflow: auto; width: 740px;">
+							<div style="width: 150px; float: left;">
+								<label for="my_signup_character">Character</label><br />
+								<%= select_tag('my_signup_character', options_for_select(@_USER.characters.collect{ |c| [c.name, c.id] }, @_MAIN_CHAR.id), :style => "width: 140px;", :disabled => true) %>
+							</div>
+				
+							<div style="width: 150px; float: left;">
+								<label for="my_signup_role">Preferred Role</label><br />
+								<%= select_tag('my_signup_role', options_for_select(calendar_signup_role_options, @personal_signup.role_preference), :style => "width: 140px;") %>
+							</div>
+
+							<div style="width: 434px; float: left;">
+								<label for="my_signup_comments">Comments</label><br />
+								<%= text_field_tag('my_signup_comments', @personal_signup.comments, :style => "width: 434px;") %>
+							</div>
+						</div>
+
+						<% center_buttons do %>
+							<button type="submit" class="button positive" style="margin-left: 0; margin-bottom: 0;">
+								<%= image_tag('icons/tick.png') %>save changes
+							</button>
+							<% link_to(event_signup_url(:event_id => @event), :method => :delete, :class => 'button negative', :style => 'margin-bottom: 0;') do %>
+								<%= image_tag('icons/cross.png') %> cancel signup
+							<% end %>
+						<% end %>
+					</div>
+				<% end %>
+			<% else %>
+				<div class="SectionHeading">
+					<h3>Signup for this Event</h3>
+				</div>
+				
+				<% form_tag(event_signup_url(:event_id => @event), :method => :post) do %>
+					<div class="highlight" style="overflow: auto; padding: 8px;">
+						<div style="overflow: auto;">
+							<div style="width: 150px; float: left;">
+								<label for="my_signup_character">Character</label><br />
+								<%= select_tag('my_signup_character', options_for_select(@_USER.characters.collect{ |c| [c.name, c.id] }, @_MAIN_CHAR.id), :style => "width: 140px;", :disabled => true) %>
+							</div>
+			
+							<div style="width: 150px; float: left;">
+								<label for="my_signup_role">Preferred Role</label><br />
+								<%= select_tag('my_signup_role', options_for_select(calendar_signup_role_options, @_MAIN_CHAR.event_role_preference), :style => "width: 140px;") %>
+							</div>
+
+							<div style="width: 436px; float: left;">
+								<label for="my_signup_comments">Comments</label><br />
+								<%= text_field_tag('my_signup_comments', nil, :style => "width: 434px;") %>
+							</div>
+						</div>
+
+						<% center_buttons do %>
+							<button type="submit" class="button positive" style="margin-left: 0; margin-bottom: 0;">
+								<%= image_tag('icons/tick.png') %> sign up
+							</button>
+						<% end %>
+					</div>
+				<% end %>
+			<% end %>
+		</div>
+	<% end %>
+	
+	<div id="EventSignup">
+		<div class="SectionHeading">
+			<h3>All Signups</h3>
+		</div>
+
+		<% if (Time.new > (@event.begins_at + 4.hours)) %>
+			<p id="event_past_notice">This event has already occurred, see <%= show_signups_link("who was signed up") %> when the event started.</p>
+		<% end %>
+
+		<div id="calendar_all_signups" <% if (Time.new > (@event.begins_at + 4.hours)) %>style="display: none;"<% end %>>
+			<% if @event.calendar_event_signups.blank? %>
+				<p>Nobody <%= (Time.new > (@event.begins_at + 4.hours)) ? 'was' : 'has' %> signed up for this event.</p>
+			<% else %>
+				<table class="simple">
+					<tr>
+						<th style="width: 30px;"></th>
+						<th style="width: 175px;">Name</th>
+						<th style="width: 150px;">Role Preference</th>
+						<th>Comments <span style="font-weight: normal; font-size: 0.9em;">(Hover mouse to expand truncated comments.)</span></th>
+					</tr>
+		
+					<% @event.calendar_event_signups.each_with_index do |signup, count| %>
+						<tr class="<% if signup.character == @_MAIN_CHAR %>highlight<% end %>">
+							<td><%= count+1 %>.</td>
+							<td><%= link_to(signup.character.name, :controller => 'roster', :action => 'show', :id => signup.character) %></td>
+							<td><%=h printable_role_preference(signup.role_preference) %></td>
+							<td><%= p_truncated_at(signup.comments, 60) %></td>
+						</tr>
+					<% end %>
+				</table>
+			<% end %>
+		</div>
+	</div>
+</div>

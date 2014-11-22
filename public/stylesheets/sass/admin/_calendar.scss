@@ -1,0 +1,36 @@
+table.eventlist, table.attendlist {
+	width:					756px;
+
+	tr {
+		th, td {
+			border:			0;
+			padding:		3px;
+		}
+	
+		th {
+			text-align:		left;
+			border-bottom:	1px solid #ddd;
+		}
+
+		td {
+			p {
+				margin:		0;
+				padding:	0;
+			}
+		}
+	}
+}
+
+table.attendlist {
+	
+	tr {
+		
+		td {
+			
+			input.text {
+				padding:	2px;
+				border:		1px solid #ccc;
+			}
+		}
+	}
+}

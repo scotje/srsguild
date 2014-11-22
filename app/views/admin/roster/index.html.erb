@@ -1,0 +1,57 @@
+<% title h("#{@_GUILD.name} Manage Roster") %>
+<div id="GuildManage_Roster">
+	<h1 class="GuildTitle"><%= @_GUILD.name %> Management: Roster</h1>
+	
+	<% form_tag(update_all_admin_roster_url, :method => :put) do %>
+	
+		<table class="simple">
+			<tr>
+				<th>Character</th>
+				<th>Class</th>
+				<th style="width: 100px;">Rank</th>
+				<th style="width: 75px; text-align: center;">Admin?</th>
+				<th></th>
+			</tr>
+		
+			<% @characters.each do |c| %>
+				<tr <% if (@_USER.main_character == c) %>class="highlight"<% end %>>
+					<td><%=h c.name %></td>
+					<td><%= character_class_with_colorbox(c.character_class) %></td>
+					<td>
+						<select name="characters[<%= c.id %>][guild_role]">
+							<option value=""></option>
+							<%= options_for_select(guild_role_options_for_select, c.guild_role) %>
+						</select>
+					</td>
+					<td style="text-align: center;">
+						<input type="checkbox" name="characters[<%= c.id %>][admin]" <% if (@_USER.main_character == c) or (c.is_admin) or (@_GUILD.owner == c.account) %>checked="checked"<% end %> <% if (@_GUILD.owner != @_USER) or (@_USER.main_character == c) %>disabled="disabled"<% end %> />
+					</td>
+					<td style="text-align: right;" class="small_buttons right_buttons">
+						<% unless (@_USER.main_character == c) or (c.is_admin) or (@_GUILD.owner == c.account) %>
+							<% link_to(gkick_admin_roster_url(c), :class => 'button', :confirm => "Are you sure you want to remove this character (and any alts) from the guild? (Note: This does not have any effect on their in-game guild status.)", :method => :put) do %>
+								<%= image_tag('icons/user_delete.png') %> 
+								Remove
+							<% end %>
+						<% end %>
+
+						<% if (c.account.sms_enabled?) %>
+							<% link_to(create_sms_admin_roster_url(c), :class => 'button') do %>
+								<%= image_tag('icons/phone_add.png') %> 
+								Send SMS
+							<% end %>
+						<% end %>
+					</td>
+				</tr>
+			<% end %>
+		</table>
+
+		<% center_buttons do %>
+			<button type="submit" class="button positive">
+				<%= image_tag('icons/tick.png') %> save changes
+			</button>
+		<% end %>
+	
+	<% end %>
+	
+	<p style="font-size: 93%;"><strong>Note:</strong> Guild Roles are currently only for informational purposes. That little admin checkbox is where the <em>real</em> action is.</p>
+</div>

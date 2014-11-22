@@ -1,0 +1,11 @@
+<div class="join_search_match">
+	<% form_tag({:action => 'join', :id => char}, {:method => 'post', :id => "char_join_guild_#{guild.id}_form"}) do %>
+		<input type="hidden" name="guild_id" value="<%= guild.id %>" />
+		<div style="float: right; width: 30%; text-align: right;">
+			<label for="join_code">Join Code:</label> <input type="password" name="join_code" size="12" /><br />
+			<p style="padding-top: 3px;"><%= submit_tag 'join this guild' %></p>
+		</div>
+		<h3 style="margin: 0; padding: 0;">&lt;<%= guild.name %>&gt;</h3>
+		<p style="margin: 0;"><%= guild.faction %>, <%= guild.region.upcase %> / <%= guild.realm %></p>
+	<% end %>
+</div>

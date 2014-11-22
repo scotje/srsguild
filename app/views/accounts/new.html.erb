@@ -1,0 +1,111 @@
+<% title 'sign up' %>
+<h2>Account Sign Up</h2>
+	
+	<% if @guild %>
+		<p style="text-align: center; padding-top: 10px;">
+			<span style="font-size: 18px;">You are signing up to join the <strong><%=h @guild.name %></strong> guild.</span><br />
+			(If this is not correct, please 
+			<%= link_to('create an unaffiliated account', new_account_url(:subdomain => false)) %>
+			instead.)
+		</p>
+	<% else %>
+		<p class="grid_5 alpha">
+			<strong>Looking for your guild?</strong><br />
+			Sign up for a free account below. Once you have done that, you can 
+			create your main character and then search for your guild. You will
+			need to have your guild's "join code" in order to get everything set
+			up. Check with your guild leader or another officer if you don't
+			know the code.
+		</p>
+	
+		<p class="grid_5 omega">
+			<strong>Want to set up a new guild?</strong><br />
+			Sign up for a free account below first, then you can create a new
+			guild from the account management page. You can manage your guild
+			free for the first 30 days, <del>after that you will need to pay with 
+			a credit card to continue using our service.</del> <strong>(Guild 
+			management is totally free during our beta!)</strong>
+		</p>
+	<% end %>
+	
+<div class="clear"></div>
+<br />
+
+<% form_for(@account, :url => account_path, :html => { :class => 'srsform'}) do %>
+	<fieldset>
+		<legend>New Account</legend>
+		
+		<div class="fieldrow">
+			<label for="account[email]">Your E-mail:</label>
+			<div class="field"><%= text_field(:account, :email, {:class => 'text', :style => 'width: 300px;'}) %></div>
+		</div>
+
+		<div class="fieldrow">
+			<label for="account[password]">Choose a Password:</label>
+			<div class="field"><%= password_field(:account, :password, {:class => 'text', :style => 'width: 120px;'}) %></div>
+		</div>
+
+		<div class="fieldrow">
+			<label for="account[password_confirmation]">Confirm Password:</label>
+			<div class="field"><%= password_field(:account, :password_confirmation, {:class => 'text', :style => 'width: 120px;'}) %></div>
+		</div>
+
+		<h3 style="padding-top: 20px;">10 Second User Agreement</h3>
+		<p>By creating an account, you agree that:</p>
+		<ul>
+			<li>You will not use your account to advertise any commercial services.</li>
+			<li>You will not harass, defame, berate, or enflame anyone through the means provided here.</li>
+			<li>You are generally a good person.</li>
+		</ul>
+		
+		<div class="fieldrow" id="terms_agree_box">
+			<label for="terms_agree">I agree.</label>
+			<input id="terms_agree" name="terms_agree" type="checkbox" />
+		</div>
+	</fieldset>
+	
+	<% if @character %>
+		<fieldset>
+			<legend>Main Character</legend>
+
+			<% if flash[:armory_error] %>
+				<p class="highlight" style="padding: 10px;">
+					We couldn't find the information for that character in the WoW Armory.
+					There are several possible reasons for this, but whatever the cause, 
+					all you need to do is fill in a little bit more information about your
+					character to continue.
+				</p>
+			<% end %>
+			
+			<%= render :partial => 'characters/form' %>
+		</fieldset>
+		
+		<fieldset>
+			<legend>Guild</legend>
+			
+			<div class="fieldrow">
+				<label for="guild_join_code">Join Code:</label>
+				<input id="guild_join_code" name="guild_join_code" type="text" class="text" style="width: 100px;" />
+			</div>
+		</fieldset>
+	<% end %>
+
+	<div class="buttonrow">
+		<% center_buttons do %>
+			<button type="submit" class="button positive" onclick="return verifyAgree();">
+				<%= image_tag('icons/tick.png') %> let's go!
+			</button>
+		<% end %>
+	</div>
+<% end %>
+
+<script type="text/javascript" charset="utf-8">
+	function verifyAgree() {
+		if (!$('terms_agree').checked) {
+			$('terms_agree_box').pulsate();
+			return false;
+		}
+		
+		return true;
+	}
+</script>

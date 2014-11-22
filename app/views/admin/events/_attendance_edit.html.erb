@@ -1,0 +1,92 @@
+<% form_tag(update_attendance_admin_event_url(event), :method => :put) do %>
+	<table class="attendlist">
+		<tr>
+			<th style="width: 20px;"></th>
+			<th style="width: 200px;">Name</th>
+			<th style="width: 125px;">Class</th>
+			<th>Notes</th>
+			<th></th>
+		</tr>
+
+		<% if event.calendar_event_attendances.blank? %>
+			<% event.characters_signed_up.find(:all, :order => 'name ASC').each_with_index do |char, count| %>
+				<tr class="attendance_row">
+					<td style="text-align: center;"><a href="#" style="color: red; text-decoration: none;" onclick="dropRow(this.up(1)); return false;">X</a></td>
+					<td><%=h char.name %><%= hidden_field_tag("attendance[#{char.id}][id]", char.id, {:class => 'char_id'}) %></td>
+					<td><%=h char.character_class %></td>
+					<td><%= text_field_tag("attendance[#{char.id}][notes]", nil, { :style => "width: 100%;", :class => 'text' }) %></td>
+					<td style="color: #ccc; text-align: right; font-weight: bold;"><%= count+1 %></td>
+				</tr>
+			<% end %>
+		<% else %>
+			<% event.calendar_event_attendances.find(:all, :include => :character, :order => 'characters.name ASC').each_with_index do |att, count| %>
+				<tr class="attendance_row">
+					<td style="text-align: center;"><a href="#" style="color: red; text-decoration: none;" onclick="dropRow(this.up(1)); return false;">X</a></td>
+					<td><%=h att.character.name %><%= hidden_field_tag("attendance[#{att.character.id}][id]", att.character.id, {:class => 'char_id'}) %></td>
+					<td><%=h att.character.character_class %></td>
+					<td><%= text_field_tag("attendance[#{att.character.id}][notes]", att.comments, { :style => "width: 100%;", :class => 'text' }) %></td>
+					<td style="color: #ccc; text-align: right; font-weight: bold;"><%= count+1 %></td>
+				</tr>
+			<% end %>
+		<% end %>
+	
+		<tr class="new_attendance">
+			<td style="text-align: center;">+</td>
+			<td>
+				<input type="text" class="text" id="new_attendance_character_name" style="width: 95%;" />
+				<div id="new_attendance_character_name_choices" class="auto_complete"></div>
+			</td>
+			<td colspan="3"><span id="new_attendance_response"></span></td>
+		</tr>
+	</table>
+	
+	<% center_buttons do %>
+		<button type="submit" class="button positive">
+			<%= image_tag('icons/tick.png') %> save attendance
+		</button>
+	<% end %>
+<% end %>
+
+<script type="text/javascript" charset="utf-8">
+	$('new_attendance_character_name').observe('keypress', function(event) {
+		$('new_attendance_response').innerHTML = "";
+		
+		var key = event.which || event.keyCode;
+
+		if (key == Event.KEY_RETURN) {
+			exclude_ids = new Array;
+			
+			$$(".attendance_row .char_id").each(function(character, idx) {
+				exclude_ids.push(character.value);
+			});
+			
+			new Ajax.Updater({ success: this.up(1) }, "<%= char_attendance_row_admin_events_url %>", {
+				parameters: { character_name: this.value, count: $$(".attendance_row").length+1, exclude: exclude_ids.toJSON() },
+				insertion: 'before',
+				
+				onSuccess: function(resp) {
+					$('new_attendance_character_name').value = '';
+				},
+				
+				on403: function(resp) {
+					$('new_attendance_response').innerHTML = resp.responseText;
+					new Effect.Highlight($('new_attendance_response'));
+				},
+
+				onFailure: function(resp) {
+					$('new_attendance_response').innerHTML = "The system is down yo. Try again in a second.";
+					new Effect.Highlight($('new_attendance_response'));
+				}
+			});
+			
+			event.stop();
+		}
+	});
+	
+	// Auto complete
+	new Ajax.Autocompleter("new_attendance_character_name", "new_attendance_character_name_choices", "<%= admin_roster_index_url %>", {callback:function(element, value) { return 'search=' + element.value }, method:'get'});
+	
+	function dropRow(row) {
+		row.remove();
+	}
+</script>

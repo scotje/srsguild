@@ -1,0 +1,11 @@
+<p>
+	<strong>Tanks:</strong> <%= @event.plan_tank_count %><br />
+	<strong>Healers:</strong> <%= @event.plan_healer_count %><br />
+	<strong>Melee DPS:</strong> <%= @event.plan_melee_dps_count %><br />
+	<strong>Ranged DPS:</strong> <%= @event.plan_ranged_dps_count %><br />
+	<strong>Unspecified:</strong> <%= @event.plan_unspecified_count %><br />
+</p>
+
+<p>
+	<%= link_to("Check Composition", "http://raidcomp.mmo-champion.com/?c=#{@raidcomp_key}", :popup => true) %>
+</p>

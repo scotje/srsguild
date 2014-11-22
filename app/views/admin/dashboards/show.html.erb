@@ -1,0 +1,42 @@
+<% title h("#{@_GUILD.name} Management") %>
+<div id="GuildManage_Dashboard">
+	<h1 class="GuildTitle"><%= @_GUILD.name %> Management</h1>
+	
+	<div id="RecentAndUpcoming">
+		<div class="SectionHeading">
+			<h2>Recent and Upcoming Events</h2>
+		</div>
+		<table>
+			<tr>
+				<th style="width: 160px; vertical-align: bottom;">When</th>
+				<th style="vertical-align: bottom;">Event</th>
+				<th style="width: 100px; text-align: center;">Signups &amp; Attendance</th>
+			</tr>
+
+			<% @near_events.each do |e| %>
+				<% if e == 'now' %>
+					<tr>
+						<td class="highlight"><%= Time.new.strftime("%m/%d/%y @ %H:%M (%Z)") %></td>
+						<td class="highlight" colspan="3">Right Now</td>
+					</tr>
+				<% else %>
+					<tr>
+						<td><%= e.begins_at.strftime("%m/%d/%y @ %H:%M (%Z)") %></td>
+						<td><%= link_to(e.title, admin_event_url(e)) %></td>
+						<td style="text-align: center;">
+							<%=h e.calendar_event_signups.size %> / 
+							<% if e.begins_at > Time.new %>
+								--
+							<% else %>
+								<%=h e.calendar_event_attendances.size %> 
+								<% if e.calendar_event_signups.size > 0 %>
+									(<%= number_to_percentage(e.calendar_event_attendances.size/e.calendar_event_signups.size*100, :precision => 0) %>)
+								<% end %>
+							<% end %>
+						</td>
+					</tr>
+				<% end %>
+			<% end %>
+		</table>
+	</div>
+</div>

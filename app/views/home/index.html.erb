@@ -1,0 +1,73 @@
+<div id="Homepage_Content">
+	<div id="Homepage_UVP" class="grid_6 alpha">
+		<h2>MVP</h2>
+		<p>
+			With <strong>srs</strong>guild, you'll spend less time on things like organization and records-keeping for
+			your guild. Leaving you with more time to walk your dog, learn Japanese, or just troll the auction house!
+		</p>
+	</div>
+	<div id="Homepage_Screen" class="grid_4 omega">
+		<%= image_tag('home/screenshot.jpg', :size => '300x203') %>
+	</div>
+	
+	<div class="clear"></div>
+	
+	<div id="Homepage_Trial_Signup" class="grid_10 highlight">
+		<% form_tag do %>
+			<select id="trial_region" name="region" style="">
+				<option value="us">US</option>
+				<option value="eu">EU</option>
+			</select>
+			
+			<input type="text" class="text" id="trial_realm" name="realm" placeholder="realm" />
+			<div id="trial_realm_choices" class="autocomplete" style="display: none;"></div>
+			
+			<input type="text" class="text" id="trial_guild" name="trial_guild" placeholder="guild" />
+			
+			<input type="submit" value="go" />
+		<% end %>
+		
+		<script type="text/javascript" charset="utf-8">
+			$('trial_region').observe('change', function() {
+				$('trial_realm').value = '';
+				$('trial_guild').value = '';
+			});
+			
+			new Ajax.Autocompleter("trial_realm", "trial_realm_choices", "/api/wow/realms", {
+				minChars: 3,
+				frequency: 0.25,
+				parameters: "as=ul",
+				callback: function(input, qstr) {
+					return qstr + '&region=' + $('trial_region').options[$('trial_region').selectedIndex].value;
+				}
+			});
+		</script>
+	</div>
+	
+	<div class="clear"></div>
+	
+	<div id="Homepage_Features" class="grid_9">
+		<div class="grid_3 alpha">
+		</div>
+
+		<div class="grid_3">
+		</div>
+
+		<div class="grid_3 omega">
+		</div>
+	</div>
+	
+	<div class="clear"></div>
+	
+	<!--
+	<div id="Homepage_Quote" class="grid_9">
+		<blockquote>
+			&ldquo;Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.&rdquo;
+
+			<cite>
+				&mdash;Some Celebrity
+			</cite>
+		</blockquote>
+	</div>
+	-->
+</div>

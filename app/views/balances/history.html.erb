@@ -1,0 +1,51 @@
+<% title h("#{@_GUILD.name} Balances") %>
+<div id="BalancesShowHistory">
+
+	<h1 class="GuildTitle"><%= @_GUILD.name %>: Balances</h1>
+
+	<div class="clearfix">
+		<% link_to(balance_url(@ba), :class => 'button', :style => 'margin: 0;') do %>
+			<%= image_tag('icons/arrow_turn_left.png') %> back
+		<% end %>
+	</div>
+
+	<div class="SectionHeading">
+		<h2><%=h @ba.name %> Transaction History for <%=h @char.name %></h2>
+	</div>
+
+	<p style="text-align: center; padding: 8px 0;">(Displaying up to the 30 most recent transactions.)</p>
+
+	<table class="simple">
+		<tr>
+			<th style="width: 150px;">Transaction Date</th>
+			<th style="width: 150px;">Modified By</th>
+			<th>Event</th>
+			<th style="width: 100px; text-align: center;">Adjustment</th>
+			<th style="width: 100px; text-align: center;">Balance</th>
+		</tr>
+
+		<% @transactions.each do |t| %>
+			<tr class="<%= cycle('odd','even') %>">
+				<td><%= t.created_at.strftime("%m/%d/%y @ %H:%M (%Z)") %></td>
+				<td><%=h t.modified_by %></td>
+				<td><%= t.calendar_event.nil? ? '--' : link_to(t.calendar_event.title, :controller => 'calendar', :action => 'show', :id => t.calendar_event.id) %></td>
+				<td style="text-align: center;"><%= number_with_precision(t.adjustment, :precision => 2) %></td>
+				<td style="text-align: center;"><%= number_with_precision(t.previous_balance + t.adjustment, :precision => 2) %></td>
+			</tr>
+			<% unless t.comment.blank? %>
+				<tr class="<%= current_cycle %>">
+					<td style="padding-top: 0;"></td>
+					<td style="padding-top: 0; font-size: 85%;" colspan="4">
+						<em><strong>Comment:</strong> <%=h t.comment %></em>
+					</td>
+				</tr>
+			<% end %>
+		<% end %>
+		
+		<tr>
+			<td colspan="4" style="text-align: right; border-top: 1px solid #ccc; padding-top: 6px;">Opening Balance: </td>
+			<td style="text-align: center; border-top: 1px solid #ccc; padding-top: 6px;"><%= number_with_precision(@transactions.last.previous_balance, :precision => 2) %></td>
+		</tr>
+	</table>
+
+</div>

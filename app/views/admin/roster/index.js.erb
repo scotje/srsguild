@@ -1,0 +1,7 @@
+<% if @characters %>
+	<ul>
+		<% @characters.each do |char| %>
+			<li><%=h char.name %></li>
+		<% end %>
+	</ul>
+<% end %>

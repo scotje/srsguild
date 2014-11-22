@@ -1,0 +1,23 @@
+<% title 'security' %>
+<div id="Security_Page">
+	<h1>Security</h1>
+	
+	<p>
+		We like to think we run a pretty tight ship around here, but we sure
+		aren't perfect. If you believe you have found a flaw or vulnerability 
+		in our application, please contact us immediately at 
+		<%= link_to('security@srsguild.com', 'mailto:security@srsguild.com') %>.
+		Please use our PGP compatible <%= link_to('public key', '/srsguild.pub') %>
+		if you need to encrypt your message and provide us with a secure
+		way to respond to your message if necessary. If you haven't heard back
+		from us in 24 hours, please follow up with another email or ping us
+		<%= link_to('on Twitter', 'http://twitter.com/srsguild') %>.
+	</p>
+	
+	<p>
+		If you have any non-security related questions or concerns, please
+		direct those to our normal support pandas either by email 
+		(<%= link_to('support@srsguild.com', 'mailto:support@srsguild.com') %>)
+		or by using our <%= link_to('contact form', contact_url) %>.
+	</p>
+</div>

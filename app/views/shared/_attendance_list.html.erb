@@ -1,0 +1,15 @@
+<table style="width: 100%;" class="EventList">
+	<% events.each do |e| %>
+		<tr>
+			<td style="width: 35%;"><%= e.begins_at.strftime("%a %b %d @ %I:%M %p (%Z)") %></td>
+			<td><%= link_to(e.title, event_url(e)) %></td>
+			<td style="width: 15%; text-align: right;">
+				<% if e.calendar_event_attendances.any? { |att| att.character == char } %>
+					<span style="color: green;">Present</span>
+				<% else %>
+					<span style="color: red;">Not Present</span>
+				<% end %>
+			</td>
+		</tr>
+	<% end %>
+</table>

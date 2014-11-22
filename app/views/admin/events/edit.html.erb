@@ -1,0 +1,24 @@
+<% title h("#{@_GUILD.name} Manage Calendar") %>
+<div id="GuildManage_Calendar_Edit">
+	<h1 class="GuildTitle"><%= @_GUILD.name %> Management: Calendar</h1>
+
+	<% form_for([:admin, @event], :url => admin_event_url(@event), :method => :put, :html => { :class => 'srsform'}) do %>
+		<fieldset>
+			<legend>Editing Event</legend>
+			
+			<%= render :partial => 'event_form_fields' %>
+		
+			<div class="buttonrow">
+				<% center_buttons do %>
+					<button type="submit" class="button positive">
+						<%= image_tag('icons/tick.png') %> save changes
+					</button>
+					<% link_to(admin_event_url(@event), :class => "button negative") do %>
+						<%= image_tag('icons/cross.png') %> cancel
+					<% end %>
+				<% end %>
+			</div>
+		</fieldset>
+	<% end %>
+	
+</div>

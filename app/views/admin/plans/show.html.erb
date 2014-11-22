@@ -1,0 +1,65 @@
+<% title h("#{@_GUILD.name} Manage Event Plan") %>
+
+<div id="GuildManage_Calendar_EventPlan">
+	<h1 class="GuildTitle"><%= @_GUILD.name %> Management: Event Plan</h1>
+
+	<% link_to(admin_event_url(@event), :class => 'button') do %>
+		<%= image_tag('icons/arrow_turn_left.png') %> back to event
+	<% end %>
+	<div class="clear"></div>
+	
+	<div class="SectionHeading">
+		<h2>Group Setup</h2>
+		<div class="heading_nav">
+			<div id="saved_notice">Saved</div>
+			<div id="saving_notice"><%= image_tag('loading-on-dddddd.gif') %> Saving...</div>
+		</div>
+	</div>
+	
+	<div id="event_signups_and_stats">
+		<div id="event_signups">
+			<div class="group_label">Signups/Backups</div>
+		
+			<% @backups.each do |s| %>
+				<div id="plan_char-<%= s.character.id %>" class="plan_char">
+					<div class="char_tools" style="position: absolute; left: 125px;"><a href="#" class="remove_from_group_button"><%= image_tag('icons/cross.png') %></a></div>
+					<%= character_class_colorbox(s.character.character_class) %> <%=h s.character.name %> <%= "(<span title=\"#{h(s.character.raid_spec)}\" style=\"cursor: help; border-bottom: 1px dotted silver;\">#{h(s.character.raid_spec[0,1])}</span>)" unless s.character.raid_spec.blank? %>
+				</div>
+			<% end %>
+		
+			<div class="clear" id="end_of_signups"></div>
+		</div>
+		
+		<div id="event_stats">
+			<div class="group_label">Current Group Stats</div>
+			
+			<div id="event_stats_content">
+				<%= render :partial => 'event_plan_stats' %>
+			</div>	
+		</div>
+	</div>
+	
+	<div id="event_groups">
+		<% @group_slots.each_with_index do |group_chars, group_num| %>
+			<div id="raid_group-<%= group_num+1 %>" class="raid_group" <% if (((group_num.to_i+1) % 2) == 1) %>style="clear: both;"<% end %>>
+				<div class="group_label">Group <%= group_num+1 %></div>
+		
+				<div class="group_slots">
+					<% group_chars.each do |gc| %>
+						<div id="plan_char-<%= gc.character.id %>" class="plan_char in_group">
+							<div class="char_tools" style="position: absolute; left: 125px;"><a href="#" class="remove_from_group_button"><%= image_tag('icons/cross.png') %></a></div>
+							<%= character_class_colorbox(gc.character.character_class) %> <%=h gc.character.name %> <%= "(<span title=\"#{h(gc.character.raid_spec)}\" style=\"cursor: help; border-bottom: 1px dotted silver;\">#{h(gc.character.raid_spec[0,1])}</span>)" unless gc.character.raid_spec.blank? %>
+						</div>
+					<% end %>
+				</div>
+			</div>
+		<% end %>
+	</div>
+</div>
+
+<%= javascript_include_tag 'admin_plans' %>
+<script type="text/javascript" charset="utf-8">
+	var plan_event_id = <%= @event.id %>;
+	var plan_event_url = "<%= admin_event_plan_url(@event) %>";
+	var plan_event_stats_url = "<%= stats_admin_event_plan_url(@event) %>";
+</script>

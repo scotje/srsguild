@@ -1,0 +1,22 @@
+<tr class="balance_row">
+	<td style="text-align: center;"><a href="#" style="color: red; text-decoration: none;" onclick="dropRow(this.up(1)); return false;">X</a></td>
+	<% if @zero_sum %><td style="text-align: center;"><input type="checkbox" name="counterparty[<%= @char.id %>]" checked="checked" /></td><% end %>
+	<td><%=h @char.name %><%= hidden_field_tag("balances[#{@char.id}][id]", @char.id, {:class => 'char_id'}) %></td>
+	<td><%= character_class_with_colorbox(@char.character_class) %></td>
+	<td>--</td>
+	<td style="text-align: center;">0.00</td>
+	<td style="text-align: center;"><input class="text" id="char_<%= @char.id %>_balance_row_adjust" type="text" name="adjust[<%= @char.id %>]" size="6" /></td>
+</tr>
+<script type="text/javascript" charset="utf-8">
+	new Tip($('char_<%= @char.id %>_balance_row_adjust'), $('balance_adjust_field_help').cloneNode(true), {
+		showOn: 'focus',
+		hideOn: 'blur',
+		hideOthers: true,
+		fixed: true,
+		stem: 'leftMiddle',
+		hook: { target: 'rightMiddle', tip: 'leftMiddle' },
+		offset: { x: 2, y: 0 },
+		width: 'auto'
+	});
+</script>
+

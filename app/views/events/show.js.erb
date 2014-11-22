@@ -1,0 +1,28 @@
+<div class="event_detail">
+	<p class="datetime"><%= @event.begins_at.strftime("%a %b %d @ %I:%M %p (%Z)") %></p>
+	<p class="organizer">Organizer: <%=h @event.organizer.name %></p>
+	
+	<% if @event.begins_at > Time.new %>
+		<%# Event has not yet occurred, show signup info. %>
+		<div class="signup">
+			<% if @_MAIN_CHAR.signed_up_for?(@event) %>
+				<p id="event_<%= @event.id %>_signup_status" class="signup_status">You <span style="color: #0f0;">are</span> signed up to attend<br /> this event. (<%= link_to('edit', event_url(@event)) %>)</p>
+			<% else %>
+				<p id="event_<%= @event.id %>_signup_status" class="signup_status">You <span style="color: #f00;">are not</span> signed up to<br /> attend this event.</p>
+			<% end %>
+			
+			<p class="signup_toggle"><%= button_to_remote('toggle signup status', { :update => "event_#{@event.id}_signup_status", :url => toggle_event_signup_url(:event_id => @event), :method => :put }) %></p>
+		</div>
+	<% else %>
+		<%# Event has already occurred, show attendance info. %>
+
+		<div class="attendance">
+			<% if @_MAIN_CHAR.attended?(@event) %>
+				<p class="signup_status">You were <span style="color: #0f0;">present</span> for this event.</p>
+			<% else %>
+				<p class="signup_status">You were <span style="color: #f00;">not present</span> for this event.</p>
+			<% end %>
+		</div>
+	<% end %>
+</div>
+

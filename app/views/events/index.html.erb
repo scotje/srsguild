@@ -1,0 +1,25 @@
+<% title h("#{@_GUILD.name} Calendar") %>
+<div id="CalendarIndex">
+
+	<h1 class="GuildTitle"><%= @_GUILD.name %>: Calendar</h1>
+
+	<div class="SectionHeading">
+		<h2>Current Raid Week</h2>
+	</div>
+	<%= render :partial => 'single_week', :locals => { :date => Date.today, :events => @this_week } %>
+	
+	<div class="SectionHeading">
+		<h2>Next Raid Week</h2>
+	</div>
+	<%= render :partial => 'single_week', :locals => { :date => (Date.today + 7.days), :events => @next_week } %>
+
+	<div class="SectionHeading">
+		<h2>Recent Attendance History</h2>
+		<div class="heading_nav">
+			<% link_to(attendance_events_url, :class => 'button') do %>
+				<%= image_tag('icons/calendar.png') %> view all
+			<% end %>
+		</div>
+	</div>
+	<%= render :partial => 'shared/attendance_list', :locals => { :events => @past_events, :char => @_MAIN_CHAR } %>
+</div>	

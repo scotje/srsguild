@@ -1,0 +1,48 @@
+<% if RAILS_ENV == 'production' %>
+	<% if @jquery %>
+		<%= javascript_include_tag 'http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js' %>
+		<%= javascript_include_tag 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/jquery-ui.min.js' %>
+
+		<script type="text/javascript">
+			jQuery.noConflict();
+	        var $j = jQuery;
+		</script>
+
+		<%= javascript_include_tag 'jquery.hoverIntent.js' %>
+	<% else %>
+		<script type="text/javascript">
+			google.load("prototype", "1.6.1.0");
+			google.load("scriptaculous", "1.8.2");
+		</script>
+
+		<%= javascript_include_tag 'prototip/prototip.js' %>
+		<%= javascript_include_tag 'lang/en.js' %>
+
+		<% if @admin %>
+			<%= javascript_include_tag 'datepicker.packed.js' %>
+		<% end %>
+	<% end %>
+<% else %>
+	<% if @jquery %>
+		<%= javascript_include_tag 'jquery.min.js' %>
+		<%= javascript_include_tag 'jquery-ui.min.js' %>
+		<%= javascript_include_tag 'jquery.hoverIntent.js' %>
+
+		<script type="text/javascript" charset="utf-8">
+		    jQuery.noConflict();
+		    var $j = jQuery;
+		</script>
+	<% else %>
+		<%= javascript_include_tag 'prototype' %>
+		<%= javascript_include_tag 'scriptaculous.js?load=effects,dragdrop,controls' %>
+
+		<%= javascript_include_tag 'prototip/prototip.js' %>
+		<%= javascript_include_tag 'lang/en.js' %>
+
+		<% if @admin %>
+			<%= javascript_include_tag 'datepicker.packed.js' %>
+		<% end %>
+	<% end %>
+<% end %>
+
+<%= javascript_include_tag 'modernizr-1.5.min.js', 'placeholder' %>

@@ -1,0 +1,74 @@
+<% title "#{h(@_GUILD.name)} &mdash; Send SMS" %>
+<div id="GuildManage_Roster">
+	<h1 class="GuildTitle"><%= @_GUILD.name %> Management: Send SMS</h1>
+
+	<div class="clear"></div>
+
+	<% form_tag(send_sms_admin_roster_url(@recipient), :method => :put, :class => 'srsform') do %>
+		<fieldset>
+			<legend>Compose Message</legend>
+		
+			<div class="fieldrow">
+				<label for="message_to">To</label>
+				<div class="field" style="padding-top: 4px;"><%=h @recipient.name %></div>
+			</div>
+
+			<div class="fieldrow">
+				<label for="message_body">Message</label>
+				<div class="field" style="width: 450px;"><%= text_area_tag('message_body', nil, {:id => 'sms-message-body', :class => 'text', :style => 'width: 97%; height: 4em;'}) %></div>
+				<div id="chars_left" style="width: 100px; float: left;"><span id="num_chars">160</span> chars left</div>
+			</div>
+
+			<div class="fieldrow">
+				<label for="cost">Cost</label>
+				<div class="field" style="padding-top: 4px;">1 SMS Credit (<%= @credits_left %> available.)</div>
+			</div>
+		</fieldset>
+
+		<div class="buttonrow">
+			<% center_buttons do %>
+				<% link_to(admin_roster_index_url, :class => 'button negative') do %>
+					<%= image_tag('icons/arrow_left.png') %> cancel
+				<% end %>
+			
+				<button type="submit" class="button positive" id="submit-button">
+					<%= image_tag('icons/tick.png') %> send SMS
+				</button>
+			<% end %>
+		</div>
+	<% end %>
+</div>
+
+<script type="text/javascript" charset="utf-8">
+	$(document).observe('dom:loaded', function(e) {
+		updateMessageLength();
+	});
+
+	$('sms-message-body').observe('keyup', function(e) {
+		updateMessageLength();
+	});
+	
+	function updateMessageLength() {
+		message = $('sms-message-body');
+		num_chars = $('num_chars');
+		
+		if (message.value.length > 160) {
+			if (!message.hasClassName('overflow')) {
+				message.addClassName('overflow');
+			}
+			
+			if (!num_chars.hasClassName('overflow')) {
+				num_chars.addClassName('overflow');
+			}
+			
+			$('submit-button').disabled = true;
+		} else {
+			message.removeClassName('overflow');
+			num_chars.removeClassName('overflow');
+			
+			$('submit-button').disabled = false;
+		}
+		
+		num_chars.innerHTML = (160-message.value.length);
+	}
+</script>

@@ -1,0 +1,11 @@
+.svn
+.DS_Store
+svn-commit.*
+*~
+restart.txt
+database.yml
+tmp
+cache/**
+*.local
+.bundle
+vendor/ruby
