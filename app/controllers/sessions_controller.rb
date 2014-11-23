@@ -4,25 +4,27 @@ class SessionsController < ApplicationController
   def new
     unless current_subdomain.blank?
       @guild = Guild.find_by_subdomain(current_subdomain)
-      
+
       redirect_to login_url(:subdomain => false) if @guild.nil?
     end
   end
 
   def create
     begin
+      #debugger
+
       user = Account::login(params[:email], params[:password])
-      
-      reset_session
-      
+
+      #reset_session
+
       session[:logged_in] = true
       session[:user_id] = user.id
       session[:admin_auth_at] = Time.new
-      
+
       if params[:for_admin]
         redirect_to admin_dashboard_url and return
       end
-      
+
       if user.main_character && user.main_character.guild
         redirect_to guild_url(:subdomain => user.main_character.guild.subdomain) and return
       else
@@ -38,16 +40,16 @@ class SessionsController < ApplicationController
       end
     end
   end
-  
+
   def destroy
     session[:logged_in] = false
-    
+
     if current_subdomain.blank?
       redirect_to root_url(:subdomain => false)
     else
       redirect_to login_url(:subdomain => current_subdomain)
     end
   end
-  
+
 
 end

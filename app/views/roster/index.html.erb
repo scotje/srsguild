@@ -3,7 +3,7 @@
 
 	<h1 class="GuildTitle"><%= @_GUILD.name %>: Roster</h1>
 
-	<% form_tag(filter_roster_url) do %>
+	<% form_tag(filter_roster_index_url) do %>
 		<div style="text-align: right; padding: 0 0 8px 0;">
 			<select name="timespan">
 				<%= options_for_select([["Last 30 days", 30], ["Last 90 days", 90], ["Last 6 months", 183], ["Last year", 365], ["All time", nil]], session[:roster_filters][:timespan]) %>

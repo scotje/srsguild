@@ -9,3 +9,6 @@ cache/**
 *.local
 .bundle
 vendor/ruby
+db/*.sqlite3
+log/*.log
+tmp/
